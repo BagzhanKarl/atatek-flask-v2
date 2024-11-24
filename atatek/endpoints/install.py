@@ -10,31 +10,31 @@ def first_launch():
     roles = [
         {
             "title": "Бастау",
-            "js": "bastay.js",
+            "price": 0.00,
             "addchild": 0,
             "addinfo": 0,
         },
         {
             "title": "Сарапшы",
-            "js": "sarapshy.js",
+            "price": 0.00,
             "addchild": 0,
             "addinfo": 0,
         },
         {
             "title": "Алтын",
-            "js": "altyn.js",
+            "price": 0.00,
             "addchild": 0,
             "addinfo": 0,
         },
         {
             "title": "Модератор",
-            "js": "moderator.js",
+            "price": 0.00,
             "addchild": 0,
             "addinfo": 0,
         },
         {
             "title": "Администратор",
-            "js": "admin.js",
+            "price": 0.00,
             "addchild": 0,
             "addinfo": 0,
         },
@@ -42,7 +42,7 @@ def first_launch():
     for role in roles:
         role = create_role(
             title=role["title"],
-            js=role["js"],
+            price=role["price"],
             add_child=role["addchild"],
             add_info=role["addinfo"],
         )
