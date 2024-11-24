@@ -1,0 +1,5 @@
+{% for user in users %}
+    <option value="{{ user.id }}" {% if user.id in moderator %}selected{% endif %}>
+        {{ user.first_name }} {{ user.last_name }}
+    </option>
+{% endfor %}

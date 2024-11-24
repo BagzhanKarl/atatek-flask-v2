@@ -1,0 +1,160 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Менің парақшам
+{% endblock %}
+
+{% block my_page %} {{ page }} {% endblock %}
+{% block newsmy %} {{ page }} {% endblock %}
+{% block mymb %} {{ page }} {% endblock %}
+{% block newsmymb %} {{ page }} {% endblock %}
+
+{% block body %}
+    <section class="main">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card" style="position: sticky; top: 150px">
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/avatar.png') }}" width="100%" style="border-radius: 20px" alt="">
+{#                            <a href="/my/profile/edit" class="btn btn-secondary w-100 mt-3">Өзгерту</a>#}
+                            <a href="/auth/logout" class="btn btn-danger w-100 mt-3">Шығу</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="user-info">
+                                <div class="user-name h3">{{user.first_name}} {{ user.last_name }}</div>
+                                <div class="user-address">{{ place.display_name }}</div>
+                            </div>
+                            <hr>
+                            <div class="user-referal-link d-flex">
+                                <label>Сіздің рефералды сілтемеңіз: </label>
+                                <input type="text" id="referal-link" readonly value="https://alash.atatek.kz/auth/register/step1/{{ id }}" class="form-control">
+                            </div>
+                            <hr>
+                            <div class="user-tree-list">
+                                <label for=""><b>Сіздің жеті-атаңыз:</b></label>
+                                {% for tree in treelist %}
+                                    {{ tree.name }}:
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <div class="d-flex gap-2 align-items-center">
+                                <div>
+                                    <a href="/my/profile">
+                                        <img src="{{ url_for('static', filename='images/arrow-back-outline.svg') }}" width="25" alt="">
+                                    </a>
+                                </div>
+                                <div>
+                                    <h3 class="m-0 p-0">Өтініш - №{{ ticket.id }}</h3>
+                                </div>
+                            </div>
+                            <hr>
+                            {% if ticket.type == 'add' %}
+                                <div class="information mt-3" style="border: 1px solid #dee2e6; padding: 25px; border-radius: 10px;">
+                                    <div class="row">
+                                        <div class="col-6 border">
+                                            <div class="d-flex gap-3 mt-3 mb-3">
+                                                <div class="">Тип:</div>
+                                                <div class="m-0 p-0"><b>Ұрпақ қосу</b></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 border">
+                                            <div class="d-flex gap-3 mt-3 mb-3">
+                                                <div>Статус:</div>
+                                                <div>
+                                                    {% if ticket.is_active %}
+                                                        <span class="badge text-bg-secondary">Қаралымда</span>
+                                                    {% elif ticket.is_cancelled %}
+                                                        <span class="badge text-bg-danger">Қабылданбады</span>
+                                                    {% elif ticket.is_confirmed %}
+                                                        <span class="badge text-bg-success">Қабылданды</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% for detail in ticket.details %}
+                                            <div class="col-6 border">
+                                                <div class="d-flex gap-3 mt-3 mb-3">
+                                                    <span>Әкесі: </span>
+                                                    <b>{{ detail.parent }}</b>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 border">
+                                                <div class="d-flex gap-3 mt-3 mb-3">
+                                                    <span>Есімі: </span>
+                                                    <b>{{ detail.name }}</b>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% elif ticket.type == 'edit' %}
+
+                                <div class="information mt-3" style="border: 1px solid #dee2e6; padding: 25px; border-radius: 10px;">
+                                    <div class="row">
+                                        <div class="col border">
+                                            <div class="d-flex gap-3 mt-3 mb-3">
+                                                <div class="">Тип:</div>
+                                                <div class="m-0 p-0"><b>Ақпарат өзгеру</b></div>
+                                            </div>
+                                        </div>
+                                        <div class="col border">
+                                            <div class="d-flex gap-3 mt-3 mb-3">
+                                                <div>Статус:</div>
+                                                <div>
+                                                    {% if ticket.is_active %}
+                                                        <span class="badge text-bg-secondary">Қаралымда</span>
+                                                    {% elif ticket.is_cancelled %}
+                                                        <span class="badge text-bg-danger">Қабылданбады</span>
+                                                    {% elif ticket.is_confirmed %}
+                                                        <span class="badge text-bg-success">Қабылданды</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 border">
+                                            <div class="d-flex gap-3 mb-3 mt-3">
+                                                <span>Есімі:</span> <b>{{ ticket.details[0].name }}</b>
+                                            </div>
+                                        </div>
+                                        <div class="col border">
+                                            <div class="d-flex gap-3">
+                                                <span>Туған жылы:</span> <b>{{ ticket.details[0].birth }}</b>
+                                            </div>
+                                        </div>
+                                        <div class="col border">
+                                            <div class="d-flex gap-3">
+                                                <span>Қайтыс болған жылы:</span> <b>{{ ticket.details[0].death }}</b>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 border">
+                                            <div><span>Ақпарат:</span></div>
+                                            <div><b>{{ ticket.details[0].biography }}</b></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function (){
+            $("#referal-link").on('click', function (){
+                $(this).select();
+                document.execCommand('copy')
+            })
+        })
+    </script>
+{% endblock %}

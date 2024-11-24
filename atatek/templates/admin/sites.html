@@ -1,0 +1,53 @@
+{% extends 'admin/base.html' %}
+
+{% block css %}
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h3>Сайты</h3>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <table id="myTable" class="display table table-border ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Жүз</th>
+                        <th>Путь</th>
+                        <th>Название</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                ajax: {
+                    url: '/api/admin/sites',
+                    dataSrc: 'data'
+                },
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/2.1.8/i18n/ru.json"
+                },
+                pageLength: 50,
+                columns: [
+                    { data: 'ID' },
+                    { data: 'Жүз' },
+                    { data: 'Путь' },
+                    { data: 'Название' },
+                    { data: 'Действие', orderable: false }
+                ]
+            });
+        });
+    </script>
+{% endblock %}

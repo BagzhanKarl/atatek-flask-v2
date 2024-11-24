@@ -1,0 +1,301 @@
+{% extends 'admin/base.html' %}
+
+{% block css %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.1/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+    <header class="bg-white" style="position: sticky; top: 20px; left: 0; z-index: 2000">
+        <h3>{{page.title}}</h3>
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <a href="#moderator-form" onclick="openModeratorAdder()" class="btn btn btn-primary">Назначить модератора</a>
+                    <a href="#popular-form" onclick="PopularPersonForm()" class="btn btn btn-primary">Добавить популярного человека</a>
+                    <a href="#news-form" class="btn btn btn-primary" onclick="openNewsForm()">Опубликовать новость</a>
+                    <a href="" class="btn btn btn-danger">Удалить сайт</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </header>
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Жуз</th>
+                        <th>1 поколение</th>
+                        <th>2 поколение</th>
+                        <th>3 поколение</th>
+                        <th>ID - node</th>
+                        <th>Открыть</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ page.title }}</td>
+                        <td>{{ page.juz }}</td>
+                        <td>{{ page.breed1 }}</td>
+                        <td>{{ page.breed2 }}</td>
+                        <td>{{ page.breed3 }}</td>
+                        <td>{{ page.tree_id }}</td>
+                        <td><a href="{{ page.subdomain }}{{ page.breed1 }}/{{ page.breed2 }}/{{ page.breed3 }}" target="_blank">Открыть</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            {% if moderators %}
+                <h4>Модераторы</h4>
+                <table class="table table-border">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Время</th>
+                            <th>Удалить</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for moderator in moderators %}
+                            <tr>
+                                <td>{{ moderator.id }}</td>
+                                <td>{{ moderator.first_name }}</td>
+                                <td>{{ moderator.last_name }}</td>
+                                <td>{{ moderator.created_at }}</td>
+                                <td><a href="/admin/moderator/delete/{{ moderator.mod }}/{{ page.id }}">Удалить</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="d-flex justify-content-center">
+                    Пока  модератор не назначено
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5>Популярные люди</h5>
+            <hr>
+            <table class="table table-border">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ФИО</th>
+                        <th>Дата и время</th>
+                        <th>Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for person in popular %}
+                        <tr>
+                            <td>{{ person.id }}</td>
+                            <td>{{ person.fullname }}</td>
+                            <td>{{ person.created_at }}</td>
+                            <td><a href="/api/admin/popular/delete/{{ person.id }}/{{ page.id }}">Удалить</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5>Новости</h5>
+            <hr>
+            <table class="table table-border">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Дата и время</th>
+                        <th>Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for new in news %}
+                        <tr>
+                            <td>{{ new.id }}</td>
+                            <td>{{ new.title }}</td>
+                            <td>{{ new.created_at }}</td>
+                            <td><a href="/api/admin/news/delete/{{ new.id }}/{{ page.id }}">Удалить</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mt-3" id="popular-form" style="display: none">
+        <div class="card-body">
+            <form action="/api/admin/popular/person" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="">ФИО</label>
+                    <input type="text" name="fullname" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="">Дата рождение</label>
+                    <input type="date" name="birthday" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="">Изоброжение</label>
+                    <input type="file" name="image" class="form-control">
+                </div>
+                <input type="text" hidden="" value="{{ page.id }}" name="page">
+                <div class="mb-3">
+                    <label for="">Биография</label>
+                    <textarea name="content" rows="5" class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn btn-success">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card mt-3" style="display: none" id="moderator-form">
+        <div class="card-body">
+            <form action="/api/admin/add/moderator" method="POST">
+                <div class="mb-3">
+                    <label for="">Пользователь</label>
+                    <select class="selectpicker form-control" id="select-moderator" name="moderator" multiple data-live-search="true">
+
+                    </select>
+
+                </div>
+                <input type="text" value="{{ page.id }}" name="page" hidden>
+                <div class="mb-3">
+                    <button class="btn btn-success">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card mt-3" id="news-form" style="display: none;">
+        <div class="card-body">
+            <form id="newsForm" onsubmit="return sendNewsData(event)">
+                <div class="mb-3">
+                    <label for="newsTitle">Название</label>
+                    <input type="text" id="newsTitle" name="title" required class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="newsPoster">Постер</label>
+                    <input type="file" id="newsPoster" name="poster" required class="form-control" accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <label for="editor">Контент</label>
+                    <div id="editor" class="form-control"></div>
+                    <input type="hidden" id="newsContent" name="content">
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Опубликовать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@5.1.0/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.1/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script>
+        function hideAllForm(){
+            $('#moderator-form').hide();
+            $('#news-form').hide();
+            $('#popular-form').hide();
+        }
+        let quill;
+
+        function PopularPersonForm(){
+            hideAllForm();
+            $('#popular-form').show()
+        }
+        function openModeratorAdder() {
+            hideAllForm();
+            $('#moderator-form').show();
+
+            $.ajax({
+                url: "/api/admin/ajax/user/option",
+                method: "POST",
+                data: {
+                    page: {{ page.id }},
+                },
+                success: function (options) {
+                    $('#select-moderator').html(options);
+                    $('select').selectpicker('refresh');
+                }
+            })
+            $('select').selectpicker();
+        }
+
+        function openNewsForm() {
+            hideAllForm();
+            $('#news-form').show();
+
+            // Инициализируем Quill только если он еще не инициализирован
+            if (!quill) {
+                quill = new Quill('#editor', {
+                    modules: {
+                        toolbar: [
+                            [{ header: [2, 3, false] }],
+                            ['bold', 'italic', 'underline'],
+                            ['link'],
+                        ],
+                    },
+                    placeholder: 'Контент ...',
+                    theme: 'snow',
+                });
+            }
+        }
+
+        function sendNewsData(event) {
+            event.preventDefault();
+
+            // Создаем объект FormData
+            const formData = new FormData();
+
+            // Добавляем название
+            const title = document.getElementById('newsTitle').value;
+            formData.append('title', title);
+
+            // Добавляем файл постера
+            const posterFile = document.getElementById('newsPoster').files[0];
+            formData.append('poster', posterFile);
+
+            // Добавляем контент из редактора Quill
+            const content = quill.root.innerHTML;
+            formData.append('content', content);
+
+            // Отправляем данные на сервер
+            fetch('{{ page.id }}/save_news', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка при отправке данных');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Новость успешно опубликована!');
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при публикации новости');
+            });
+
+            return false;
+        }
+    </script>
+{% endblock %}

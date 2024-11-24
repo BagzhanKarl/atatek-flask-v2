@@ -1,0 +1,350 @@
+<div class="header-personal-modal">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+            <div>
+                {% if item_more.tree_icon %}
+                    <img src="static/images/icons/{{ item_more.tree_icon }}" onclick="BigImgshow()" id="item_image" width="30" height="30" alt="">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/flag-outline.svg') }}" id="item_image" width="30" height="30" alt="">
+                {% endif %}
+
+            </div>
+            <div class="h3 card-title" >
+                {{ item.name }}
+            </div>
+        </div>
+        <div class="d-flex gap-3 align-items-center justify-content-end">
+            <div class="dropdown">
+                <ion-icon name="ellipsis-vertical-outline" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></ion-icon>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li class="dropdown-item">Ататектегі ID: <b>{{ item.id }}</b></li>
+                    <li class="dropdown-item">Жүйеге қосқан: <b>Бағжан Карл</b></li>
+                </ul>
+                <button type="button" onclick="closeModal()" class="btn-close" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="modal-body">
+    <input type="text" hidden="" value="https://alash.atatek.kz/get/{{ item.id }}" id="link">
+    <style>
+        #data{
+            display: flex;
+            flex-direction: column;
+            height: 85vh;
+        }
+        .btn_list{
+            margin-top: auto;
+        }
+        .item_info{
+            flex-grow: 1;
+        }
+    </style>
+    <div id="data">
+        {% if role == 1 %}
+            <div class="alert alert-info alert-dismissible fade show" role="alert" style="font-size: 14px">
+                <strong>Бастау!</strong> Cіз тек басқалар толтырған ақпараттарды ғана көре аласыз. <a href="/subs">Ақпарат енгізу үшін</a>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div id="item_info">
+                {% if item_more.info %}
+                    {{ item_more.info }}
+                {% else %}
+                    {{ item.name }} туралы уақытша ақпарат жоқ!
+                {% endif %}
+            </div>
+            <div class="btn_list role1 d-flex justify-content-between">
+                <div class="btn btn btn-outline-primary" onclick="copyLink()" id="copylinkbtn">Бөлісу</div>
+                <div class="btn btn btn-primary" onclick="closeModal()">Түсінікті</div>
+            </div>
+        {% elif role == 2 or role == 3 or role == 4 %}
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-page="info">Ақпарат</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-page="add">Енгізу</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-page="edit">Өзгерту</a>
+                </li>
+            </ul>
+            <div class="tabs mt-3" style="height: 75vh;">
+                <div class="tab" id="info" style="display: flex; height: 100%; flex-direction: column">
+                    <div id="item_info">
+                        {% if item_more.info %}
+                            {{ item_more.info }}
+                        {% else %}
+                            {{ item.name }} туралы уақытша ақпарат жоқ!
+                        {% endif %}
+                    </div>
+                    <div class="btn_list role1 d-flex justify-content-between" style="margin-top: auto;">
+                        <div class="btn btn btn-outline-primary" onclick="copyLink()" id="copylinkbtn">Бөлісу</div>
+                        <div class="btn btn btn-primary" onclick="closeModal()">Түсінікті</div>
+                    </div>
+                </div>
+                <div class="tab" style="display:none;" id="add">
+                    <form action="/api/ticket/create/add" method="POST">
+                        <div class="form-title h4">Шежіреге енгізу</div>
+                        <hr>
+                        <input type="text" hidden name="item" value="{{ item.id }}" class="">
+                        <div class="input-container">
+                            <div class="mb-3 no-delete">
+                                <input type="text" name="childname[]" class="form-control" placeholder="Бас әріппен ұрпақтың есімін енгізіңіз">
+                            </div>
+                        </div>
+                        <div class="form-text mb-3">"Сұраныс жіберу" батырмасын басқаннан кейін сіз жіберген ақпарат админдермен тексеріледі</div>
+
+                        <div class="btn-part d-flex justify-content-between">
+                            <button type="button" onclick="newField()" class="btn btn-outline-primary" style="font-size: 14px !important;">Жаңа жол қосу</button>
+                            <button class="btn btn-primary" style="font-size: 14px !important;">Сұраныс жіберу</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab" style="display:none;" id="edit">
+                    <form action="api/ticket/create/edit" method="POST">
+                        <div class="form-title h4">Ақпарат қосу немесе өзгерту</div>
+                        <hr>
+                        <input type="text" hidden name="item" value="{{ item.id }}" class="">
+                        <div class="mb-2">
+                            <label for="">Аты</label>
+                            <input type="text" name="name" value="{{ item.name }}" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="">Туған жыл</label>
+                                    <input type="number" placeholder="1999" value="{% if item.birth_year%}{{ item.birth_year }}{% endif %}" name="birth" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="">Қайтыс болған жыл</label>
+                                    <input type="number" placeholder="1999" value="{% if item.death_year%}{{ item.death_year }}{% endif %}" name="death" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="info" id="" class="form-control" placeholder="{{ item.name }} туралы ақпаратты енгізіңіз!" rows="10">{{ item_more.text }}</textarea>
+                        </div>
+                        <div class="form-text mb-3">"Өзгерту" батырмасын басқаннан кейін сіз жіберген ақпарат админдермен тексеріледі</div>
+                        <div class="text-end">
+                            <button class="btn btn-primary" style="font-size: 14px !important;">Өзгерту</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+                $('.nav-link').on('click', function () {
+                    let tab = $(this).data('page');
+                    let tabs = $('.tab');
+                    let tabbtns = $('.nav-link');
+
+                    tabs.each(function(_, item) {
+                        $(item).hide();
+                    });
+                    tabbtns.each(function(_, item) {
+                        $(item).removeClass('active');
+                    });
+                    $(this).addClass('active');
+                    $('#' + tab).show();
+                });
+            </script>
+        {% elif role == 5 %}
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-page="info">Ақпарат</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-page="add">Енгізу</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-page="edit">Өзгерту</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-page="newsite">Сайт</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-page="delete">Жою</a>
+                </li>
+            </ul>
+            <div class="tabs mt-3" style="height: 75vh;">
+                <div class="tab" id="info" style="display: flex; height: 100%; flex-direction: column">
+                    <div id="item_info">
+                        {% if item_more.info %}
+                            {{ item_more.info }}
+                        {% else %}
+                            {{ item.name }} туралы уақытша ақпарат жоқ!
+                        {% endif %}
+                    </div>
+                    <div class="btn_list role1 d-flex justify-content-between" style="margin-top: auto;">
+                        <div class="btn btn btn-outline-primary" onclick="copyLink()" id="copylinkbtn">Бөлісу</div>
+                        <div class="btn btn btn-primary" onclick="closeModal()">Түсінікті</div>
+                    </div>
+                </div>
+                <div class="tab" style="display:none;" id="add">
+                    <form action="/api/admin/add/" method="POST">
+                        <div class="form-title h4">Шежіреге енгізу</div>
+                        <hr>
+                        <input type="text" hidden="" value="{{ item.id }}" name="item">
+                        <div class="input-container">
+                            <div class="mb-3 no-delete">
+                                <input type="text" name="childname[]" class="form-control" placeholder="Бас әріппен ұрпақтың есімін енгізіңіз">
+                            </div>
+                        </div>
+                        <div class="btn-part d-flex justify-content-between">
+                            <button type="button" onclick="newField()" class="btn btn-outline-primary" style="font-size: 14px !important;">Жаңа жол қосу</button>
+                            <button class="btn btn-primary" style="font-size: 14px !important;">Сақтау</button>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="tab" style="display:none;" id="edit">
+                    <form action="api/admin/edit/" method="POST" enctype="multipart/form-data">
+                        <div class="form-title h4">Ақпарат қосу немесе өзгерту</div>
+                        <hr>
+                        <input type="text" hidden="" value="{{ item.id }}" name="item">
+                        <div class="mb-2">
+                            <label for="">Аты</label>
+                            <input type="text" name="name" value="{{ item.name }}" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="">Туған жыл</label>
+                                    <input type="number" placeholder="1999" value="{% if item.birth_year%}{{ item.birth_year }}{% endif %}" name="birth" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="">Қайтыс болған жыл</label>
+                                    <input type="number" placeholder="1999" value="{% if item.death_year%}{{ item.death_year }}{% endif %}" name="death" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="info" id="" class="form-control" placeholder="{{ item.name }} туралы ақпаратты енгізіңіз!" rows="5">{{ item_more.info }}</textarea>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="">Иконка</label>
+                                <input type="file" name="icon" class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="">Толық сурет</label>
+                                <input type="file" name="full-icon" class="form-control">
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-primary" style="font-size: 14px !important;">Сақтау</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab" style="display:none;" id="delete">
+                    <div class="text-center">
+                        <h3>"{{ item.name }}" жазбасын өшіреміз бе?</h3>
+                        <p>Жойылған ақпарат қайтадан кері қайтарылмайды, тек жаңадан қоса аласыз. </p>
+                        <p><a href="/api/admin/delete/{{ item.id }}" class="btn btn-danger">Ия өшіру</a></p>
+                    </div>
+                </div>
+                <div class="tab" style="display: none" id="newsite">
+                    <form action="/api/admin/create/newsite" method="POST">
+                        <div class="mb-3">
+                            <label for="">Жүз</label>
+                            <select name="jyz" id="" class="form-control">
+                                <option value="Ұлы жүз">Ұлы жүз</option>
+                                <option value="Орта жүз">Орта жүз</option>
+                                <option value="Кіші жүз">Кіші жүз</option>
+                                <option value="Жүзден тыс">Жүзден тыс</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Сайттың аты</label>
+                            <input type="text" name="title" required value="{{ item.name }}" class="form-control">
+                        </div>
+                        <input type="text" hidden="" name="item" value="{{ item.id }}">
+                        <div class="mb-3">
+                            <label for="">1 - ұрпақ</label>
+                            <input type="text" name="breed1" required class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="">2 - ұрпақ</label>
+                            <input type="text" name="breed2" required class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="">3 - ұрпақ</label>
+                            <input type="text" name="breed3" required class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary">Сақтау</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                $('.nav-link').on('click', function () {
+                    let tab = $(this).data('page');
+                    let tabs = $('.tab');
+                    let tabbtns = $('.nav-link');
+
+                    tabs.each(function(_, item) {
+                        $(item).hide();
+                    });
+                    tabbtns.each(function(_, item) {
+                        $(item).removeClass('active');
+                    });
+                    $(this).addClass('active');
+                    $('#' + tab).show();
+                });
+            </script>
+        {% endif %}
+    </div>
+</div>
+<style>
+    .image-pop{
+        position: fixed;
+        background: rgba(0, 0, 0, .8);
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<div class="image-pop" style="display: none" onclick="BigImghide()">
+    <img src="static/images/icons/{{ item_more.tree_full_icon }}" style="height: 300px; width: 300px; object-fit: cover">
+</div>
+<script>
+    function BigImgshow(){
+        $('.image-pop').show();
+    }
+    function BigImghide(){
+        $('.image-pop').hide();
+    }
+    function copyLink() {
+        $('#link').select()
+        document.execCommand('copy');
+        alert('Сілтеме көшірілді');
+    }
+    function newField(){
+        const newField = $(`
+            <div class="mb-3 d-flex align-items-center">
+                <input type="text" name="childname[]" class="form-control" placeholder="Бас әріппен ұрпақтың есімін енгізіңіз">
+                <button type="button" class="btn btn-danger btn-sm ms-2 remove-field"><ion-icon style='font-size: 24px;display: flex;' name="close-circle-outline"></ion-icon></button>
+            </div>
+        `);
+
+        // Добавляем новый элемент в input-container
+        $('.input-container').append(newField);
+
+        // Добавляем обработчик для кнопки удаления
+        newField.find('.remove-field').on('click', function() {
+            $(this).parent().remove(); // удаляем поле
+        });
+    }
+</script>

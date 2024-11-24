@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AtaTek - Admin</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+        <style>
+            ion-icon{
+                font-size: 24px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+        {% block css %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="d-flex">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
+                style="position: fixed; width: 280px; height: 100vh; top: 0; left: 0; overflow-y: auto;">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-4">ATATEK</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills d-flex gap-3 flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/admin/"  class="nav-link text-white">
+                            <span class="d-flex align-items-center gap-3">
+                                <ion-icon name="person-circle-outline"></ion-icon>
+                                Пользователи
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/sites" class="nav-link text-white">
+                            <span class="d-flex align-items-center gap-3">
+                                <ion-icon name="newspaper-outline"></ion-icon>
+                                Сайты
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/roles" class="nav-link text-white">
+                            <span class="d-flex align-items-center gap-3">
+                                <ion-icon name="card-outline"></ion-icon>
+                                Подписки
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/tickets" class="nav-link text-white">
+                            <span class="d-flex align-items-center gap-3">
+                                <ion-icon name="copy-outline"></ion-icon>
+                                Тикеты
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown">
+                    Bagzhan Karl
+                </div>
+            </div>
+            <div class="section px-5 py-3 w-100" style="margin-left: 280px;">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://getbootstrap.com/docs/5.3/examples/sidebars/sidebars.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script>
+            $(document).ready(function () {
+                let currentPath = window.location.pathname;
+
+                $('.nav-link').each(function () {
+                    let linkPath = $(this).attr('href');
+
+                    if (currentPath === linkPath) {
+                        $(this).addClass('active');
+                    }
+                });
+            });
+
+        </script>
+        {% block js %}
+        {% endblock %}
+    </body>
+</html>

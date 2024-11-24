@@ -1,0 +1,105 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Менің парақшам
+{% endblock %}
+
+{% block my_page %} {{ page }} {% endblock %}
+{% block newsmy %} {{ page }} {% endblock %}
+{% block mymb %} {{ page }} {% endblock %}
+{% block newsmymb %} {{ page }} {% endblock %}
+
+{% block body %}
+    <section class="main">
+        <div class="main-container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card" style="position: sticky; top: 150px">
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/avatar.png') }}" width="100%" style="border-radius: 20px" alt="">
+{#                            <a href="/my/profile/edit" class="btn btn-secondary w-100 mt-3">Өзгерту</a>#}
+                            <a href="/auth/logout" class="btn btn-danger w-100 mt-3">Шығу</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="user-info">
+                                <div class="user-name h3">{{user.first_name}} {{ user.last_name }}</div>
+                                <div class="user-address">{{ place.display_name }}</div>
+                            </div>
+                            <hr>
+                            <div class="user-referal-link d-flex">
+                                <label>Сіздің рефералды сілтемеңіз: </label>
+                                <input type="text" id="referal-link" readonly value="https://alash.atatek.kz/auth/register/step1/{{ id }}" class="form-control">
+                            </div>
+                            <hr>
+                            <div class="user-tree-list">
+                                <label for=""><b>Сіздің жеті-атаңыз:</b></label>
+                                {% for tree in treelist %}
+                                    {{ tree.name }}:
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h3>Сіз қарауға жіберген өтініштер:</h3>
+                            <hr>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Тип</th>
+                                        <th>Статус</th>
+                                        <th>Жіберілген күн</th>
+                                        <th>Толығырақ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ticket in tickets %}
+                                        <tr>
+                                            <td>{{ ticket.id }}</td>
+                                            <td>
+                                                {% if ticket.type == 'edit' %}
+                                                    Өзгерту
+                                                {% else %}
+                                                    Қосу
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if ticket.is_active %}
+                                                    <span class="badge text-bg-secondary">Қаралымда</span>
+                                                {% elif ticket.is_cancelled %}
+                                                    <span class="badge text-bg-danger">Қабылданбады</span>
+                                                {% elif ticket.is_confirmed %}
+                                                    <span class="badge text-bg-success">Қабылданды</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ ticket.created_at }}</td>
+                                            <td><a href="/my/profile/ticket/{{ ticket.id }}">Толығырақ</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function (){
+            $("#referal-link").on('click', function (){
+                $(this).select();
+                document.execCommand('copy')
+            })
+        })
+    </script>
+{% endblock %}

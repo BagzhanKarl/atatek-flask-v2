@@ -1,0 +1,113 @@
+{% extends 'main/base.html' %}
+{% block title %}
+Алаш
+{% endblock %}
+
+{% block my_page %} {{ page.title }} {% endblock %}
+{% block newsmy %} {{ page.title }} {% endblock %}
+{% block mymb %} {{ page.title }} {% endblock %}
+{% block newsmymb %} {{ page.title }} {% endblock %}
+
+{% block body %}
+    <div id="sample">
+        <div id="myDiagramDiv" class="samplepage"></div>
+        <div class="div d-flex gap-3 justify-content-between" style="position: fixed; z-index: 1001; right: 5%; top: 20%">
+            <button id="toggleAngle" class="btn btn-primary">
+                <img src="{{ url_for('static', filename='images/90.svg') }}" width="25" class="a90" alt="">
+                <img src="{{ url_for('static', filename='images/0.svg') }}" width="25" class="a0" style="display: none" alt="">
+            </button>
+        </div>
+
+    </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">ATATEK</strong>
+                <small>Қазір</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="usernameinfo">
+                Бұл адамның балалары туралы ақпарат жоқ!
+            </div>
+        </div>
+    </div>
+    <div class="pers-modal" style="display:none;" id="personal-modal" onclick="">
+        <div class="close-dark-panel" onclick="closeModal()"></div>
+        <div class="modal-container" id="modal-content">
+
+        </div>
+    </div>
+    <style>
+    #loader{
+        position: fixed; width: 100%; height: 100%; top: 0; left: 0; background: rgba(0, 0, 0, .8); display: flex; justify-content: center; align-items: center; z-index: 2000
+    }
+    </style>
+    <div id="loader" style="display: none">
+        <div class="spinner-border text-light" role="status">
+
+        </div>
+    </div>
+
+    <script>
+        function showLoader(){
+            $('#loader').show();
+        }
+        function hideLoader(){
+            $('#loader').hide();
+        }
+        const familyData = JSON.parse('{{ start|safe }}');
+        function noDate(name){
+            const toastLiveExample = document.getElementById('liveToast')
+            const toast = new bootstrap.Toast(toastLiveExample)
+            $('#usernameinfo').text(name + '! Бұл адамның балалары туралы ақпарат жоқ!')
+            toast.show()
+            setTimeout(() => {
+                toast.hide()
+            }, 5000)
+        }
+        function closeModal(){
+            $('#personal-modal').hide();
+        }
+        function openInfo(id){
+            $('#personal-modal').show();
+            let url = `/api/get/${id}/info`;
+            $.ajax({
+                url: url,
+                method: 'POST',
+                success: function (answere){
+                    $('#modal-content').html(answere);
+
+                }
+            })
+        }
+        const theme = {
+            colors: {
+                BadgeBackground: '{{ set.male_badge_background }}',
+                BadgeText: '{{ set.male_badge_text }}',
+                civilianBorder: '{{ set.civilian_border }}',
+                personalBorder: '{{ set.person_border }}',
+                personText: '{{ set.person_text }}',
+                personNodeBackground: '{{ set.person_node_background }}',
+                link: '{{ set.person_text }}'
+            },
+            fonts: {
+                badgeFont: '{{ set.bage_font_style }} {{set.bage_font_size}}px Montserrat',
+                birthDeathFont: '{{ set.date_font_style }} {{set.date_font_size}}px Montserrat',
+                nameFont: '{{ set.main_font_style }} {{set.main_font_size}}px Montserrat',
+            },
+            sizes: {
+                stroke: {{ set.stroke }},
+                radius: {{ set.radius }},
+                nodespace: {{ set.nodespace }},
+                layerspace: {{ set.layerspace }},
+                nodeX: {{ set.node_x }},
+                nodeY: {{ set.node_y }},
+                textX: {{ set.text_x }},
+                textY: {{ set.text_y }},
+                textTop: {{ set.text_top }},
+                dateTop: {{ set.date_top }},
+            }
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
