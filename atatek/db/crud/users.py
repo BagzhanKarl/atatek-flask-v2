@@ -58,6 +58,7 @@ def login_user(phone, password):
             return {"status": False, "data": "Телефон номер немесе құпиясөзіңіз қате"}
 
     except Exception as e:
+        print(e)
         return {"status": False, "data": "Деректерді өңдеу кезінде қателік болды, кейінірек қайталаңыз"}
 
 
