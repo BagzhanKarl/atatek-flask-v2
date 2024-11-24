@@ -2,11 +2,11 @@ from atatek.db import db, Role
 from sqlalchemy.exc import IntegrityError
 
 # Create Role
-def create_role(title, js, add_child=False, add_info=False):
+def create_role(title, price, add_child=False, add_info=False):
     try:
         role = Role(
             title=title,
-            js=js,
+            price=price,
             add_child=add_child,
             add_info=add_info
         )
