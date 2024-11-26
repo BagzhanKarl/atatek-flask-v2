@@ -1,5 +1,5 @@
 const nameProperty = 'name';
-const link = '/api/tree/get/childs';
+const link = 'https://alash.atatek.kz/api/tree/get/childs';
 const STROKE_WIDTH = theme.sizes.stroke;
 const CORNER_ROUNDNESS = theme.sizes.radius;
 
