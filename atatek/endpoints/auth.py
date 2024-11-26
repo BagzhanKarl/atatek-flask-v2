@@ -14,10 +14,12 @@ def login():
         print(user['status'])
         if user['status'] == True:
             response = make_response(redirect(url_for('main.index')))
-            response.set_cookie('token', user['token'])
+            # Устанавливаем куки для всех поддоменов
+            response.set_cookie('token', user['token'], domain='.atatek.kz')
             return response
         else:
             return render_template('auth/login.html', errorText=user['data'])
+
 
     else:
         return render_template('auth/login.html')
