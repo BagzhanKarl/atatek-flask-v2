@@ -1,7 +1,7 @@
 import os
 
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for
-from flask_cors import CORS, cross_origin
+
 from atatek.db import get_childs_by_parent, read_tree_by_id, read_tree_info_by_id, add_create_ticket, \
     create_ticket_crud, edit_ticket_crud, create_tree, delete_tree, edit_tree_crud, create_or_update_tree_info, \
     create_new_page, get_all_pages, create_moderator, get_moderator_list_by_page_id, add_popular_person
@@ -11,7 +11,6 @@ from atatek.utils.icons import save_file
 
 api = Blueprint('api', __name__)
 
-ALLOWED_ORIGINS = ['https://alash.atatek.kz', 'https://uly-jyz.atatek.kz']
 
 @api.route('/auth/register/get_place/', methods=['POST'])
 def get_place_list():
@@ -23,7 +22,6 @@ def get_place_list():
 
 @api.route('/tree/get/childs/', methods=['POST', 'GET'])
 @api_token_required
-@cross_origin(origins=ALLOWED_ORIGINS)
 def get_child():
     data = request.get_json()
     parent_id = data.get('parent_id')
