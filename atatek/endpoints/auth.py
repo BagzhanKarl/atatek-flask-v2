@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, url_for, request, redirect, session, make_response
 
-from atatek.db import get_all_pages
+from atatek.db import get_all_pages, get_parents_list_by_id
 from atatek.db.crud.users import create_or_update_user, create_referral, login_user
 
 auth = Blueprint('auth', __name__)
@@ -15,7 +15,8 @@ def login():
         if user['status'] == True:
             response = make_response(redirect(url_for('main.index')))
             # Устанавливаем куки для всех поддоменов
-            response.set_cookie('token', user['token'], domain='.atatek.kz')
+            # response.set_cookie('token', user['token'], domain='.atatek.kz')
+            response.set_cookie('token', user['token'])
             return response
         else:
             return render_template('auth/login.html', errorText=user['data'])
@@ -92,7 +93,18 @@ def register_site():
 
     else:
         page = get_all_pages()
-        return render_template('auth/sites.html', pages=page)
+        pageList = []
+        for item in page:
+            parents = get_parents_list_by_id(item.tree_id)
+            search = ''
+            for parent in parents:
+                search += parent['name'] + " "
+            pageList.append({
+                'id': item.id,
+                'title': item.title,
+                'search': search
+            })
+        return render_template('auth/sites.html', pages=pageList)
 
 @auth.route('/register/verify', methods=['GET', 'POST'])
 def register_verify():
