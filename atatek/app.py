@@ -1,6 +1,5 @@
 from functools import wraps
 from flask import Flask
-from flask_cors import CORS, cross_origin
 from atatek import endpoints
 from atatek.db import db
 from atatek.endpoints import *
@@ -13,8 +12,6 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_TIMEZONE'] = 'UTC'  # или 'Asia/Almaty'
 app.secret_key = 'atatek'
 db.init_app(app)
-
-ALLOWED_ORIGINS = ['https://alash.atatek.kz', 'https://uly-jyz.atatek.kz',]
 
 
 app.register_blueprint(auth, url_prefix='/auth')
