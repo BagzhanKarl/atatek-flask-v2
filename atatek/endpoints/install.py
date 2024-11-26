@@ -47,11 +47,18 @@ def first_launch():
             add_info=role["addinfo"],
         )
 
-    # tree = create_tree(
-    #     name='Алаш',
-    #     item_id=14
-    # )
+    return jsonify(
+        {
+            "status": True,
+        }
+    )
 
+@install.route('/install/second/launch')
+def second_launch():
+    tree = create_tree(
+        name='Алаш',
+        item_id=14
+    )
     return jsonify(
         {
             "status": True,
