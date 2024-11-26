@@ -1,0 +1,64 @@
+{% extends 'admin/base.html' %}
+
+{% block css %}
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h3>Изменить</h3>
+    <hr>
+    <div class="card">
+        <div class="card-header h3">{{ role.title }}</div>
+        <div class="card-body">
+            <form action="" method="post">
+                <div class="mb-3">
+                    <label for="">Название</label>
+                    <input type="text" name="title" required value="{{ role.title }}" class="form-control">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="">Количество детей, который может добавить</label>
+                            <input type="number" required name="add_child" value="{{ role.add_child }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="">Количество информаций, который может добавить</label>
+                            <input type="number" required name="add_info" value="{{ role.add_info }}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="personal_page" class="d-flex gap-3">
+                                <input type="checkbox" name="personal_page" {% if role.personal_page == True %} checked {% endif %} class="form-check" id="personal_page">
+                                Просмотр сайтов своего рода
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="all_pages" class="d-flex gap-3">
+                                <input type="checkbox" name="all_pages" {% if role.all_pages == True %} checked {% endif %} class="form-check" id="all_pages">
+                                Просмотр сайтов всего рода
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="">Стоимость (мес/тг)</label>
+                    <input type="number" name="price" required value="{{ role.price }}" class="form-control">
+                </div>
+                <div class="mb-3 text-end">
+                    <button class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

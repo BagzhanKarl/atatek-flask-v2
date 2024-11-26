@@ -6,7 +6,7 @@ from atatek.utils import get_tree_data_on_request
 
 
 # Создание нового дерева
-def create_tree(name, item_id, birth=None, death=None, parent_id=None, created_by=None, updated_by=None):
+def create_tree(name, item_id, birth=None, death=None,  parent_id=None, created_by=None, updated_by=None):
     try:
         tree = Tree(
             name=name,
@@ -16,6 +16,7 @@ def create_tree(name, item_id, birth=None, death=None, parent_id=None, created_b
             created_by=created_by,
             updated_by=updated_by,
             item_id=item_id,
+            status=False
         )
         db.session.add(tree)
         db.session.commit()
@@ -63,7 +64,7 @@ def get_childs_by_parent(parent_id: int, role):
                     parent_id=parent_id,
                     birth=item['birth_year'],
                     death=item['death_year'],
-                    created_by=1,
+                    created_by=None,
                 )
                 response.append({
                     "id": item_data.id,
@@ -156,5 +157,3 @@ def get_parents_list_by_id(id, lastTouch=None):
 
 
     return parents
-
-

@@ -1,5 +1,5 @@
 from atatek.db import db
-
+from datetime import datetime
 class Subscription(db.Model):
     __tablename__ = 'subscriptions'
 
@@ -8,11 +8,8 @@ class Subscription(db.Model):
     role = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
     addchild = db.Column(db.Integer, nullable=False, default=False)
     addinfo = db.Column(db.Integer, nullable=False, default=False)
-    start_date = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)  # Дата начала
-    end_date = db.Column(db.DateTime, nullable=False)  # Дата окончания
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if 'start_date' not in kwargs:  # Если start_date не задан, берем текущую дату
-            self.start_date = datetime.utcnow()
-        self.end_date = self.start_date + timedelta(days=30)  # Устанавливаем дату окончания через месяц
+    personal = db.Column(db.Boolean, nullable=False)
+    allpage = db.Column(db.Boolean, nullable=False)
+    start_date = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    days = db.Column(db.Integer, nullable=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)

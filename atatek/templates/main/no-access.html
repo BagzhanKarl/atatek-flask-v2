@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Тарифтер
+{% endblock %}
+{% block my_page %} {{ page.title }} {% endblock %}
+{% block newsmy %} {{ page.title }} {% endblock %}
+{% block mymb %} {{ page.title }} {% endblock %}
+{% block newsmymb %} {{ page.title }} {% endblock %}
+
+{% block body %}
+    <section class="main">
+        <div class="text-center h3">Cізде <b>"Бастау"</b> тарифі. Бұл бетті көру үшін сізге басқа тариф алу керек</div>
+        <div class="main-container">
+            <div class="row justify-content-around mt-5">
+                {% for role in roles[:3] %}
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-header" style="background: white !important; border-radius: 20px 20px 0 0">
+                                <h3>{{ role.title }}</h3>
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>{{ role.add_child}} - адам қосу</li>
+                                    <li>{{ role.add_info }} - ақпарат қосу</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

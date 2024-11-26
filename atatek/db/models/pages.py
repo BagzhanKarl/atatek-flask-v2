@@ -14,8 +14,8 @@ class Pages(db.Model):
 
     tree_id = db.Column(db.Integer, db.ForeignKey('main_tree.id'), nullable=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now())
 
 class PopularPeople(db.Model):
     __tablename__ = 'popular_people'
@@ -26,13 +26,13 @@ class PopularPeople(db.Model):
     content = db.Column(db.Text, nullable=False)
     image = db.Column(db.String(100), nullable=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now())
 
 class Moderators(db.Model):
     __tablename__ = 'moderators'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     page = db.Column(db.Integer, db.ForeignKey('pages.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now())

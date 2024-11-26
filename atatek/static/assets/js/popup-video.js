@@ -1,0 +1,10 @@
+function loadYouTubeAPI(callback){const existingScript=document.querySelector('script[src="https://www.youtube.com/iframe_api"]');if(!existingScript){const script=document.createElement('script');script.src='https://www.youtube.com/iframe_api';script.onload=callback;document.body.appendChild(script);}else if(callback){callback();}}
+let player;function initializePlayer(videoId){console.log(`Initializing player with video ID: ${videoId}`);const videoContainer=document.querySelector('.popup_modal .video-container');if(player){player.destroy();player=null;}
+videoContainer.innerHTML='';player=new YT.Player(videoContainer,{height:'390',width:'640',videoId:videoId,events:{'onReady':onPlayerReady,'onError':onPlayerError}});}
+function onPlayerReady(event){console.log('Player ready');setTimeout(()=>event.target.playVideo(),100);}
+function onPlayerError(event){console.error('Error occurred: ',event.data);}
+function showModal(videoId){if(document.querySelector('.popup_modal')){initializePlayer(videoId);document.querySelector('.popup_modal').classList.add('show-modal');document.documentElement.classList.add('no-scroll');}}
+function closeModal(){if(player){player.stopVideo();player.destroy();player=null;}
+const modal=document.querySelector('.popup_modal');if(modal){modal.classList.remove('show-modal');document.documentElement.classList.remove('no-scroll');document.querySelector('.popup_modal .video-container').innerHTML='';}}
+const playButtons=document.querySelectorAll('.play-video');if(playButtons.length>0){playButtons.forEach(button=>{button.addEventListener('click',function(){const videoId=button.getAttribute('data-video-id');console.log(`Play button clicked for video ID: ${videoId}`);showModal(videoId);});});const modal=document.querySelector('.popup_modal');if(modal){modal.addEventListener('click',function(e){if(e.target===this){closeModal();}});document.querySelector('.close-modal').addEventListener('click',function(){closeModal();});}}
+loadYouTubeAPI(function(){console.log('YouTube IFrame API loaded');window.onYouTubeIframeAPIReady=function(){console.log('YouTube IFrame API is ready');};});

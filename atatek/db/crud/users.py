@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
 
-def create_or_update_user(id=None, phone=None, first_name=None, last_name=None, password=None, country=None, address=None, page=None):
+def create_or_update_user(id=None, phone=None, role=None, first_name=None, last_name=None, password=None, country=None, address=None, page=None):
     try:
         if id:
             print('Обновление данных')
@@ -16,6 +16,7 @@ def create_or_update_user(id=None, phone=None, first_name=None, last_name=None, 
                 if country: user.country = country
                 if address: user.address = address
                 if page: user.page = page
+                if role: user.role = role
                 db.session.commit()
                 return {"status": True, "user": user.id}
         else:

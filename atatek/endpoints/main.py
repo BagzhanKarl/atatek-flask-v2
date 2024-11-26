@@ -3,7 +3,7 @@ import os
 from flask import Blueprint, render_template, request, redirect
 
 from atatek.db import User, get_place_by_osm, get_parents_list_by_id, get_page_by_id, get_user_tickets_all, \
-    get_user_ticket_by_id
+    get_user_ticket_by_id, get_all_roles
 from atatek.db.crud.users import get_user_by_id
 from atatek.utils import token_required
 
@@ -77,7 +77,7 @@ def my_profile():
     page = request.page
     personal_tree = get_parents_list_by_id(get_page_by_id(page).tree_id)
     tickets = get_user_tickets_all(userid)
-    return render_template('main/profile.html', tickets=tickets, treelist=personal_tree, user=user, place=place)
+    return render_template('main/profile.html', page=get_page_by_id(page).title, tickets=tickets, treelist=personal_tree, user=user, place=place)
 
 @main.route('/my/profile/edit')
 def my_profile_edit():
@@ -93,3 +93,11 @@ def my_profile_ticket(id):
     personal_tree = get_parents_list_by_id(get_page_by_id(page).tree_id)
     tickets = get_user_ticket_by_id(id)
     return render_template('main/ticket.html', ticket=tickets, treelist=personal_tree, user=user, place=place)
+
+@main.route('/no-access/tariff-plans')
+@token_required
+def no_access():
+    page = request.page
+    roles = get_all_roles()
+    print(roles)
+    return render_template('main/no-access.html',page=get_page_by_id(page), roles=roles)

@@ -11,13 +11,13 @@ class Tree(db.Model):
 
     parent_id = db.Column(db.Integer, db.ForeignKey('main_tree.id'))
 
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     updated_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
 
-
+    status = db.Column(db.Boolean, nullable=True)
     item_id = db.Column(db.Integer, nullable=True)
 
     parent = db.relationship('Tree', remote_side=[id], foreign_keys=[parent_id], backref='children')
@@ -32,7 +32,7 @@ class TreeInfo(db.Model):
     tree_icon = db.Column(db.String(100), nullable=True)
     tree_full_icon = db.Column(db.String(100), nullable=True)
 
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), default=1)
     updated_by = db.Column(db.Integer, db.ForeignKey('users.id'), default=1)

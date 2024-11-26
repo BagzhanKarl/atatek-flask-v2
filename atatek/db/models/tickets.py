@@ -10,8 +10,8 @@ class Tickets(db.Model):
     is_cancelled = db.Column(db.Boolean, default=False)
     is_confirmed = db.Column(db.Boolean, default=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 class EditTicket(db.Model):
@@ -25,8 +25,8 @@ class EditTicket(db.Model):
 
     biography = db.Column(db.Text)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False)
 
 
 class AddTicket(db.Model):
@@ -36,5 +36,5 @@ class AddTicket(db.Model):
     parent = db.Column(db.Integer, db.ForeignKey('main_tree.id'))
     name = db.Column(db.String(50))
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False)

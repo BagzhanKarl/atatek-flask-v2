@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request, render_template, redirect, url_fo
 from atatek.db import get_childs_by_parent, read_tree_by_id, read_tree_info_by_id, add_create_ticket, \
     create_ticket_crud, edit_ticket_crud, create_tree, delete_tree, edit_tree_crud, create_or_update_tree_info, \
     create_new_page, get_all_pages, create_moderator, get_moderator_list_by_page_id, add_popular_person
-from atatek.db.crud.users import get_all_user_list
+from atatek.db.crud.users import get_all_user_list, create_or_update_user
 from atatek.utils import get_data, api_token_required, token_required
 from atatek.utils.icons import save_file
 
@@ -20,13 +20,26 @@ def get_place_list():
     return data
 
 
-@api.route('/tree/get/childs/', methods=['POST'])
+@api.route('/tree/get/childs/', methods=['POST', 'GET'])
 @api_token_required
 def get_child():
     data = request.get_json()
     parent_id = data.get('parent_id')
     role = request.role
     childCheck = get_childs_by_parent(parent_id, role)
+
+    response = {
+        "status": True,
+        "author": "Bagzhan Karl",
+        "api": "v3",
+        "data": childCheck
+    }
+    return jsonify(response)
+
+@api.route('/tree/get/childs/token/<int:id>', methods=['GET'])
+@api_token_required
+def get_child_by_id_for_me(id):
+    childCheck = get_childs_by_parent(id, 1)
 
     response = {
         "status": True,
@@ -105,8 +118,6 @@ def admin_delete_child(id):
     return redirect(url_for('main.index'))
 
 
-
-
 @api.route('/admin/edit/', methods=['POST'])
 @token_required
 def edit_child_by_admin():
@@ -161,8 +172,7 @@ def create_new_site():
         breed3=breed3,
         tree=item,
     )
-    return redirect(url_for('admin.admin_site', id=page.id))
-
+    return redirect(url_for('admin.admin_sites_settings', id=page.id))
 
 
 @api.route('/admin/users/', methods=['GET'])
@@ -180,7 +190,6 @@ def get_users():
             'Действие': f'<a href="/admin/user/{user.id}">Посмотреть</a>'  # Исправление
         })
     return jsonify({"data": data})
-
 
 
 @api.route('/admin/sites/', methods=['GET'])
@@ -237,3 +246,15 @@ def add_popular_person_api():
         image=image,
     )
     return redirect(url_for('admin.admin_site', id=page))
+
+@api.route('/admin/user/change/role/<int:id>', methods=['GET'])
+@token_required
+def change_user_role(id):
+    user = request.user_id
+    role = request.role
+
+    newrole = create_or_update_user(
+        id=user,
+        role=id
+    )
+    return redirect(url_for('auth.logout'))

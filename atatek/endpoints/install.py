@@ -47,10 +47,10 @@ def first_launch():
             add_info=role["addinfo"],
         )
 
-    tree = create_tree(
-        name='Алаш',
-        item_id=14
-    )
+    # tree = create_tree(
+    #     name='Алаш',
+    #     item_id=14
+    # )
 
     return jsonify(
         {

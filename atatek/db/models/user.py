@@ -19,8 +19,8 @@ class User(db.Model):
 
     page = db.Column(db.Integer, nullable=True)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False)
 
 class Referral(db.Model):
     __tablename__ = 'referrals'
@@ -28,7 +28,7 @@ class Referral(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     referrer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     referred_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
 
     __table_args__ = (db.UniqueConstraint('referrer_id', 'referred_id', name='unique_referral'),)
 
@@ -42,4 +42,4 @@ class Verify(db.Model):
     user = db.Column(db.Integer, nullable=False)
     code = db.Column(db.Integer, nullable=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)

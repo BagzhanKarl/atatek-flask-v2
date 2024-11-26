@@ -11,9 +11,13 @@ class Role(db.Model):
     add_child = db.Column(db.Integer, nullable=False, default=False)
     add_info = db.Column(db.Integer, nullable=False, default=False)
     price = db.Column(db.Float, nullable=False, default=0.00)
+    personal_page = db.Column(db.Boolean, nullable=False, default=True)
+    all_pages = db.Column(db.Boolean, nullable=False, default=False)
+    family_person_count = db.Column(db.Integer, nullable=False, default=0)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False)
 
     def __repr__(self):
         return f'<Role {self.id}>'

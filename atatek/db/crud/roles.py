@@ -30,12 +30,15 @@ def get_all_roles():
     return Role.query.all()
 
 # Update Role
-def update_role(role_id, **kwargs):
+def update_role(role_id, add_child=None, add_info=None, price=None, title=None, personal=False, all_pages=False):
     role = Role.query.get(role_id)
     if role:
-        for key, value in kwargs.items():
-            setattr(role, key, value)
-        role.updated_at = datetime.utcnow()
+        if add_child: role.add_child = add_child
+        if add_info: role.add_info = add_info
+        if price: role.price = price
+        if title: role.title = title
+        if personal: role.personal = personal
+        if all_pages: role.all_pages = all_pages
         db.session.commit()
         return role
     return None

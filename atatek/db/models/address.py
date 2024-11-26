@@ -1,3 +1,4 @@
+from datetime import datetime
 from atatek.db import db
 
 class Places(db.Model):
@@ -10,3 +11,6 @@ class Places(db.Model):
     type = db.Column(db.String(250), nullable=False)
     name = db.Column(db.String(250), nullable=False)
     display_name = db.Column(db.String(250), nullable=False)
+
+    created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False)

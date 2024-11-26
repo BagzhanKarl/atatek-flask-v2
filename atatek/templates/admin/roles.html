@@ -1,1 +1,36 @@
 {% extends 'admin/base.html' %}
+
+{% block css %}
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h3>Роли</h3>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <table id="myTable" class="display table table-border ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for role in roles %}
+                        <tr>
+                            <td>{{ role.id }}</td>
+                            <td>{{ role.title }}</td>
+                            <td><a href="/admin/role/{{ role.id }}">Изменить</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

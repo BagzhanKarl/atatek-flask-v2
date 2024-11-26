@@ -1,0 +1,108 @@
+{% extends("news/index.html") %}
+
+{% set page_title = page.title %}
+
+{% block swiper %}
+    {% for item in news[:3] %}
+        <style>
+        .atatek-bg-{{ item.id }}{
+            background: url("/static/images/news/{{ item.poster }}");
+        }
+        </style>
+        <div class="swiper-slide">
+            <div class="swiper-slide">
+                <div class="hero-news-card bg-f atatek-bg-{{ item.id }}">
+                    <div class="news-info bg-white text-center">
+                        <ul class="news-metainfo list-unstyle mb-15">
+                            <li><i class="ri-time-line"></i>{{ item.created_at.strftime('%H:%M - %d.%m.%Y') }}</li>
+                            <li><i class="ri-message-3-line"></i>0 пікір</li>
+                            <li><a href="news/{{ item.id }}">{{ page.title }}</a></li>
+                        </ul>
+                        <h1 class="fs-46 ls-3 fw-semibold mb-13">
+                            <a href="news/{{ item.id }}" class="hover-anim-blue">
+                                {{item.title}}
+                            </a>
+                        </h1>
+                        <p>{{ item.content|striptags|truncate(35, True) }}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block last_news %}
+    {% for item in news[:3] %}
+        <div class="col-xl-4 col-md-6">
+            <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start mb-25">
+                <div class="news-img rounded-circle">
+                    <img src="/static/images/news/{{ item.poster }}" alt="News" style="width: 119px; border-radius: 6px; height: 119px; image-orientation: flip">
+                </div>
+                <div class="news-info">
+                    <ul class="news-metainfo list-unstyle">
+                        <li><i class="ri-time-line"></i>{{ item.created_at.strftime('%H:%M - %d.%m.%Y') }}</li>
+                    </ul>
+                    <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                        <a href="news/{{ item.id }}" class="hover-anim-blue">
+                            {{ item.title }}
+                        </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block news %}
+    {% for item in news %}
+        <div class="col-md-6">
+        <div class="news-card mb-50">
+            <div class="hover-anim-img round-6 overflow-hidden mb-28">
+                <img src="/static/images/news/{{ item.poster }}" alt="News" class="round-6 transition">
+            </div>
+            <div class="news-info">
+                <ul class="news-metainfo list-unstyle mb-12">
+                    <li><i class="ri-time-line"></i>{{ item.created_at.strftime('%H:%M - %d.%m.%Y') }}</li>
+                    <li><i class="ri-message-3-line"></i>0 пікір</li>
+                </ul>
+                <h3 class="fs-30 fw-semibold ls-3 mb-13">
+                    <a href="news-details-style-one.html" class="hover-anim-blue">
+                        {{  item.title }}
+                    </a>
+                </h3>
+                <p class="mb-22">
+                    {{ item.content|striptags|truncate(100, True) }}
+                </p>
+                <a href="news/{{ item.id }}" class="btn style-two fw-semibold">Толығырақ<img src="{{ url_for('static', filename='assets/img/icons/long-arrow-blue-2.svg') }}" alt="Arrow"></a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+{% block newsletter_style %}
+    <style>
+        .page-newsletter{
+
+            background: url("static/images/news/sites/{{ settings.newsletter_bg }}") !important;
+        }
+    </style>
+{% endblock %}
+{% block popular_persons %}
+    {% for person in popular %}
+        <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start">
+            <div class="rounded-circle">
+                <img src="/static/images/popular/{{ person.image }}" style="width: 100px; height: 100px; object-fit: cover" alt="Image" class="rounded-circle">
+            </div>
+            <div class="news-info">
+                <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                    <a href="news/popular/{{ person.id }}" class="hover-anim-blue">
+                        {{person.fullname}}
+                    </a>
+                </h3>
+
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

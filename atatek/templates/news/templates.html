@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/dark-theme.css">
+    <title>Ататек - Жаңалықтар</title>
+
+</head>
+<body>
+
+<div class="preloader-area" id="preloader">
+    <div id="loader"></div>
+</div>
+
+<div class="cursor"></div>
+<div class="cursor-inner"></div>
+
+<div class="navbar-area style-three position-relative" id="navbar">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4 col-md-4">
+                <ul class="social-profile style-one list-unstyled">
+                    <li>
+                        <a href="https://www.instagram.com/" target="_blank">
+                            <img src="assets/img/icons/instagram-blue.svg" alt="Instagram">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 col-5 ps-xxl-4">
+                <a href="index.html" class="navbar-brand text-center">
+                    <span class="logo-light d-block mx-auto">ATATEK</span>
+                </a>
+            </div>
+            <div class="col-md-4 col-7">
+                <ul class="user-options d-flex align-items-center justify-content-end list-unstyle">
+                    <li>
+                        <button type="button" class="search-btn p-0 bg-transparent border-0" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <i class="ri-search-2-line"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <a class="navbar-toggler" data-bs-toggle="offcanvas" href="#navbarOffcanvas" role="button"
+                           aria-controls="navbarOffcanvas">
+                            <img src="assets/img/icons/sidebar-menu.svg" alt="Sidebar Icon">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="responsive-navbar style-two offcanvas offcanvas-end border-0" data-bs-backdrop="static" tabindex="-1"
+     id="navbarOffcanvas">
+    <div class="offcanvas-header">
+        <a href="index.html" class="navbar-brand text-center">
+            <span class="logo-light d-block mx-auto text-white">ATATEK</span>
+        </a>
+        <button type="button" class="close-btn bg-transparent position-relative lh-1 p-0 border-0"
+                data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="responsive-menu">
+            <li><a href="#">Шежіре</a></li>
+            <li><a href="#">Менің әулетім</a></li>
+            <li><a href="#">Жаңалықтар</a></li>
+            <li><a href="#">Статистика</a></li>
+            <li><a href="#">Менің парақшам</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="modal fade searchModal" id="searchModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <input type="text" class="form-control" placeholder="Іздеу....">
+                <button type="submit"><i class="ri-search-2-line"></i></button>
+            </form>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
+                    class="ri-close-large-line"></i></button>
+        </div>
+    </div>
+</div>
+
+
+<div class="hero-wrap style-three">
+    <div class="container">
+        <div class="hero-slider-wrap position-relative">
+            <div class="hero-slider swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="hero-news-card bg-f bg-1">
+                            <div class="news-info bg-white text-center">
+                                <ul class="news-metainfo list-unstyle mb-15">
+                                    <li><i class="ri-time-line"></i>4 күн бұрын</li>
+                                    <li><i class="ri-message-3-line"></i>35 пікір</li>
+                                    <li><a href="">Жарты</a></li>
+                                </ul>
+                                <h1 class="fs-46 ls-3 fw-semibold mb-13">
+                                    <a href="news-details-style-one.html" class="hover-anim-blue">
+                                        Жаңалықтың тақырыбы осында болады
+                                    </a>
+                                </h1>
+                                <p class="mb-0">Бұл қысқаша ақпарат тұратын жер</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="hero-news-card bg-f bg-2">
+                            <div class="news-info bg-white text-center">
+                                <ul class="news-metainfo list-unstyle mb-15">
+                                    <li><i class="ri-time-line"></i>4 күн бұрын</li>
+                                    <li><i class="ri-message-3-line"></i>35 пікір</li>
+                                    <li><a href="">Жарты</a></li>
+                                </ul>
+                                <h1 class="fs-46 ls-3 fw-semibold mb-13">
+                                    <a href="news-details-style-one.html" class="hover-anim-blue">
+                                        Жаңалықтың тақырыбы осында болады
+                                    </a>
+                                </h1>
+                                <p class="mb-0">Бұл қысқаша ақпарат тұратын жер</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="hero-news-card bg-f bg-3">
+                            <div class="news-info bg-white text-center">
+                                <ul class="news-metainfo list-unstyle mb-15">
+                                    <li><i class="ri-time-line"></i>4 күн бұрын</li>
+                                    <li><i class="ri-message-3-line"></i>35 пікір</li>
+                                    <li><a href="">Жарты</a></li>
+                                </ul>
+                                <h1 class="fs-46 ls-3 fw-semibold mb-13">
+                                    <a href="news-details-style-one.html" class="hover-anim-blue">
+                                        Жаңалықтың тақырыбы осында болады
+                                    </a>
+                                </h1>
+                                <p class="mb-0">Бұл қысқаша ақпарат тұратын жер</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-btn">
+                <div class="hero-prev d-flex flex-column justify-content-center align-items-center rounded-circle"><img
+                        src="assets/img/icons/left-arrow-black.svg" alt="Arrow"></div>
+                <div class="hero-next d-flex flex-column justify-content-center align-items-center rounded-circle"><img
+                        src="assets/img/icons/right-arrow-black.svg" alt="Arrow"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-100">
+    <h2 class="section-subtitle ls-3 text-center mb-35 br-b-1 pb-30">Соңғы жаңалықтар</h2>
+    <div class="row justify-content-center mb-25">
+        <div class="col-xl-4 col-md-6">
+            <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start mb-25">
+                <div class="news-img rounded-circle">
+                    <img src="4dcbf6e1-0543-484b-9143-ae5b56ac28ad.webp" alt="News" style="width: 119px; border-radius: 6px; height: 119px; image-orientation: flip">
+                </div>
+                <div class="news-info">
+                    <ul class="news-metainfo list-unstyle">
+                        <li><i class="ri-time-line"></i>2 Сағат бұрын</li>
+                    </ul>
+                    <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                        <a href="news-details-style-one.html" class="hover-anim-blue">
+                            Соңғы жаңалықтың тақырыбы
+                        </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start mb-25">
+                <div class="news-img rounded-circle">
+                    <img src="assets/img/thumbnail-news/news-5.jpg" alt="News" class="rounded-circle">
+                </div>
+                <div class="news-info">
+                    <ul class="news-metainfo list-unstyle">
+                        <li><i class="ri-time-line"></i>2 Сағат бұрын</li>
+                    </ul>
+                    <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                        <a href="news-details-style-one.html" class="hover-anim-blue">
+                            Соңғы жаңалықтың тақырыбы
+                        </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start mb-25">
+                <div class="news-img rounded-circle">
+                    <img src="assets/img/thumbnail-news/news-5.jpg" alt="News" class="rounded-circle">
+                </div>
+                <div class="news-info">
+                    <ul class="news-metainfo list-unstyle">
+                        <li><i class="ri-time-line"></i>2 Сағат бұрын</li>
+                    </ul>
+                    <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                        <a href="news-details-style-one.html" class="hover-anim-blue">
+                            Соңғы жаңалықтың тақырыбы
+                        </a>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container pb-50">
+    <div class="row align-items-center mb-40">
+        <div class="col-xl-12 col-lg-4 mb-lg-20">
+            <h2 class="section-title mb-0">Жарты жаңалықтары</h2>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-xl-8 pe-xxl-1">
+            <div class="tab-content product-tab-content">
+                <div class="tab-pane fade show active" id="tab_1" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="news-card mb-50">
+                                <div class="hover-anim-img round-6 overflow-hidden mb-28">
+                                    <img src="assets/img/new-stories/news-12.jpg" alt="News" class="round-6 transition">
+                                </div>
+                                <div class="news-info">
+                                    <ul class="news-metainfo list-unstyle mb-12">
+                                        <li><i class="ri-time-line"></i>23 Күн бұрын</li>
+                                        <li><i class="ri-message-3-line"></i>04 пікір</li>
+                                    </ul>
+                                    <h3 class="fs-30 fw-semibold ls-3 mb-13">
+                                        <a href="news-details-style-one.html" class="hover-anim-blue">
+                                            How to Create a Relaxing Evening Routine for Better Sleep
+                                        </a>
+                                    </h3>
+                                    <p class="mb-22">
+                                        This year has been a whirlwind of drama and controversies in the
+                                        world of celebrities. From unexpected breakups.
+                                    </p>
+                                    <a href="news-details-style-one.html" class="btn style-two fw-semibold">Толығырақ<img src="assets/img/icons/long-arrow-blue-2.svg" alt="Arrow"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        NAVIGATION-->
+        <div class="col-xl-4 ps-xxl-4">
+            <div class="sidebar style-two mt-0 fixed-wrap">
+                <div class="sidebar-widget">
+                    <div class="author-widget">
+                        <h2 class="fs-36 fw-semibold ls-3 mb-35">Жарты</h2>
+                        <img src="assets/img/author/author-6.png" class="author-avatar rounded-circle d-inline-block mb-40">
+                        <h5 class="fs-22 ls-3 mb-15">Жарты жаңалықтары туралы бетке қош келдіңіз</h5>
+                        <p class="mb-0">Ақпараттар</p>
+                    </div>
+                </div>
+                <div class="sidebar-widget">
+                    <h5 class="fs-22 fw-semibold lh-1 ls-3 mb-25">Танымал адамдар</h5>
+                    <div class="popular-news-widget">
+                        <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start">
+                            <div class="news-img rounded-circle">
+                                <img src="assets/img/news/news-thumb-3.png" alt="Image" class="rounded-circle">
+                            </div>
+                            <div class="news-info">
+                                <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                                    <a href="news-details-style-one.html" class="hover-anim-blue">
+                                        Адамның есімі
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start">
+                            <div class="news-img rounded-circle">
+                                <img src="assets/img/news/news-thumb-3.png" alt="Image" class="rounded-circle">
+                            </div>
+                            <div class="news-info">
+                                <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                                    <a href="news-details-style-one.html" class="hover-anim-blue">
+                                        Адамның есімі
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start">
+                            <div class="news-img rounded-circle">
+                                <img src="assets/img/news/news-thumb-3.png" alt="Image" class="rounded-circle">
+                            </div>
+                            <div class="news-info">
+                                <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                                    <a href="news-details-style-one.html" class="hover-anim-blue">
+                                        Адамның есімі
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-100 pb-65">
+    <div class="subscribe-box style-four bg-f round-6 position-relative index-1">
+        <div class="row align-items-center">
+            <div class="col-xl-5 col-lg-6 pe-xxl-5 mb-md-25">
+                <h2 class="fs-36 text-white fw-semibold ls-3 mb-8 me-xxl-4">Ең маңызды жаңалықтарды бақылап отырыңыз</h2>
+                <p class="text-offwhite mb-0 pe-xxl-4"></p>
+            </div>
+            <div class="col-xl-4 offset-xl-3 col-lg-6">
+                <form class="subscribe-form position-relative index-1">
+                    <input type="email" placeholder="Электрондық почта" class="w-100 bg-white border-0 round-6">
+                    <button class="border-0 bg-transparent position-absolute"> Жазылу <img
+                            src="assets/img/icons/long-arrow-blue-2.svg" alt=""></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-wrap style-one bg-title ptb-100">
+    <div class="container">
+        <div class="footer-top">
+            <div class="row">
+                <div class="col-lg-4 mb-md-15">
+                    <div class="footer-widget">
+                        <a href="index.html" class="logo d-block text-white">ATATEK</a>
+
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="footer-widget">
+                        <ul class="footer-menu style-two list-unstyled d-flex flex-wrap align-items-center justify-content-lg-end">
+                            <li><a href="#">Басты бет</a></li>
+                            <li><a href="#">Шежіре</a></li>
+                            <li><a href="#">Менің әулетім</a></li>
+                            <li><a href="#">Статистика</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="row align-items-center">
+                <div class="col-md-8 pe-xxl-5">
+                    <p class="copyright-text text-offwhite fs-15 mb-0"><span class="text-white">Copyright:</span> 2024-ATATEK
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="social-profile style-one text-md-end list-unstyled">
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank">
+                                <i class="ri-instagram-line"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<div id="progress-wrap" class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path id="progress-path" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+</div>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/swiper-bundle.min.js"></script>
+<script src="assets/js/aos.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

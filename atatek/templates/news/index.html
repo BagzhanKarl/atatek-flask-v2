@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/remixicon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/dark-theme.css') }}">
+    <title>Ататек - Жаңалықтар</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/1.svg') }}">
+
+</head>
+<body>
+
+<div class="preloader-area" id="preloader">
+    <div id="loader"></div>
+</div>
+{#<div class="cursor"></div>#}
+{#<div class="cursor-inner"></div>#}
+
+<div class="navbar-area style-three position-relative" id="navbar">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4 col-md-4">
+                <ul class="social-profile style-one list-unstyled">
+                    <li>
+                        <a href="https://www.instagram.com/" target="_blank">
+                            <img src="{{ url_for('static', filename='assets/img/icons/instagram-blue.svg') }}" alt="Instagram">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 col-5 text-center">
+                <img src="{{ url_for('static', filename='images/logo-text.png') }}" style="width: 120px;" alt="">
+            </div>
+            <div class="col-md-4 col-7">
+                <ul class="user-options d-flex align-items-center justify-content-end list-unstyle">
+                    <li>
+                        <a class="navbar-toggler" data-bs-toggle="offcanvas" href="#navbarOffcanvas" role="button"
+                           aria-controls="navbarOffcanvas">
+                            <img src="{{ url_for('static', filename='assets/img/icons/sidebar-menu.svg') }}" alt="Sidebar Icon">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="responsive-navbar style-two offcanvas offcanvas-end border-0" data-bs-backdrop="static" tabindex="-1"
+     id="navbarOffcanvas">
+    <div class="offcanvas-header">
+        <a href="index.html" class="navbar-brand text-center">
+            <span class="logo-light d-block mx-auto text-white">ATATEK</span>
+        </a>
+        <button type="button" class="close-btn bg-transparent position-relative lh-1 p-0 border-0"
+                data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="responsive-menu">
+            <li><a href="https://alash.atatek.kz/">Шежіре</a></li>
+            <li><a href="https://alash.atatek.kz/my">Менің әулетім</a></li>
+            <li><a href="#">Жаңалықтар</a></li>
+            <li><a href="https://alash.atatek.kz/profile">Менің парақшам</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="hero-wrap style-three">
+    <div class="container">
+        <div class="hero-slider-wrap position-relative">
+            <div class="hero-slider swiper">
+                <div class="swiper-wrapper">
+                    {% block swiper %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="slider-btn">
+                <div class="hero-prev d-flex flex-column justify-content-center align-items-center rounded-circle">
+                    <img src="{{ url_for('static', filename='assets/img/icons/left-arrow-black.svg') }}" alt="Arrow">
+                </div>
+                <div class="hero-next d-flex flex-column justify-content-center align-items-center rounded-circle">
+                    <img src="{{ url_for('static', filename='assets/img/icons/right-arrow-black.svg') }}" alt="Arrow">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-100">
+    <h2 class="section-subtitle ls-3 text-center mb-35 br-b-1 pb-30">Соңғы жаңалықтар</h2>
+    <div class="row justify-content-center mb-25">
+        {% block last_news %}
+        {% endblock %}
+
+    </div>
+</div>
+
+<div class="container pb-50">
+    <div class="row align-items-center mb-40">
+        <div class="col-xl-12 col-lg-4 mb-lg-20">
+            <h2 class="section-title mb-0">{{ page_title }}</h2>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-xl-8 pe-xxl-1">
+            <div class="tab-content product-tab-content">
+                <div class="tab-pane fade show active" id="tab_1" role="tabpanel">
+                    <div class="row">
+                        {% block news %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 ps-xxl-4">
+            <div class="sidebar style-two mt-0 fixed-wrap">
+                <div class="sidebar-widget">
+                    <div class="author-widget">
+                        <h2 class="fs-36 fw-semibold ls-3 mb-35">{{ page_title }}</h2>
+                        <img src="/static/images/news/sites/{{ settings.logo }}" class="author-avatar d-inline-block mb-40">
+                        <h5 class="fs-22 ls-3 mb-15">{{ page_title }} жаңалықтары туралы бетке қош келдіңіз</h5>
+                        <p class="mb-0">{{ settings.description }}</p>
+                    </div>
+                </div>
+                <div class="sidebar-widget">
+                    <h5 class="fs-22 fw-semibold lh-1 ls-3 mb-25">Танымал адамдар</h5>
+                    <div class="popular-news-widget">
+                        {% block popular_persons %}
+                        {% endblock %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-100 pb-65">
+    {% block newsletter_style %}
+    {% endblock %}
+    <div class="subscribe-box style-four bg-f page-newsletter round-6 position-relative index-1">
+        <div class="row align-items-center">
+            <div class="col-xl-5 col-lg-6 pe-xxl-5 mb-md-25">
+                <h2 class="fs-36 text-white fw-semibold ls-3 mb-8 me-xxl-4">Ең маңызды жаңалықтарды бақылап отырыңыз</h2>
+                <p class="text-offwhite mb-0 pe-xxl-4"></p>
+            </div>
+            <div class="col-xl-4 offset-xl-3 col-lg-6">
+                <form class="subscribe-form position-relative index-1">
+                    <input type="email" placeholder="Электрондық почта" class="w-100 bg-white border-0 round-6">
+                    <button class="border-0 bg-transparent position-absolute"> Жазылу <img src="assets/img/icons/long-arrow-blue-2.svg" alt=""></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-wrap style-one bg-title ptb-100">
+    <div class="container">
+        <div class="footer-top">
+            <div class="row">
+                <div class="col-lg-4 mb-md-15">
+                    <div class="footer-widget">
+                        <a href="https://alash.atatek.kz" class="logo d-block text-white">ATATEK</a>
+
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="footer-widget">
+                        <ul class="footer-menu style-two list-unstyled d-flex flex-wrap align-items-center justify-content-lg-end">
+                            <li><a href="#">Басты бет</a></li>
+                            <li><a href="#">Шежіре</a></li>
+                            <li><a href="#">Менің әулетім</a></li>
+                            <li><a href="#">Статистика</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="row align-items-center">
+                <div class="col-md-8 pe-xxl-5">
+                    <p class="copyright-text text-offwhite fs-15 mb-0"><span class="text-white">Copyright:</span> 2024-ATATEK
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="social-profile style-one text-md-end list-unstyled">
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank">
+                                <i class="ri-instagram-line"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<div id="progress-wrap" class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path id="progress-path" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+</div>
+
+<script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/swiper-bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/aos.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.hover-anim-img img').each(function() {
+            // Получаем ширину изображения
+            var width = $(this).width();
+            // Рассчитываем высоту по соотношению 16:9
+            var height = width * 9 / 16;
+            // Устанавливаем высоту изображения
+            $(this).css('height', height + 'px');
+        });
+    });
+</script>
+</body>
+</html>
