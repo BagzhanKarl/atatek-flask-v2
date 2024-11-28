@@ -39,7 +39,7 @@ def show_news_page_uly(breed1, breed2, breed3):
 def show_news_page_uly_by_id(breed1, breed2, breed3, news_id):
     page = get_page_by_breeds(breed1, breed2, breed3)
 
-    news = get_news_by_id(page.id)
+    news = get_news_by_id(news_id)
     popular = get_all_popular_persons_by_page_id(page.id)
     site_settings = get_site_settings(page.id)
     return render_template('news/page-detail.html', settings=site_settings, news=news, popular=popular, page=page)
