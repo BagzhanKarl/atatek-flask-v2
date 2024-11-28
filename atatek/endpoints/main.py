@@ -30,7 +30,7 @@ def index():
 
     return render_template('main/main.html', page=get_page_by_id(page), set=settings, start=json.dumps(startList))
 
-@main.route('/my')
+@main.route('/my/')
 @token_required
 def my_page():
     role = request.role
