@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 
-from atatek.db import create_role, create_tree
+from atatek.db import create_role, create_tree, create_new_page
 
 install = Blueprint('install', __name__)
 
@@ -63,4 +63,15 @@ def second_launch():
         {
             "status": True,
         }
+    )
+
+@install.route('/install/open/page/for/<int:id>')
+def open_page(id):
+    page = create_new_page(
+        title='Жарты',
+        juz='Ұлы жүз',
+        breed1='alban',
+        breed2='sary',
+        breed3='zharty',
+        tree=id
     )

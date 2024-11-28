@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/remixicon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/dark-theme.css') }}">
+    <title>Ататек - Жаңалықтар</title>
+
+</head>
+<body>
+
+<div class="preloader-area" id="preloader">
+    <div id="loader"></div>
+</div>
+
+<div class="navbar-area style-three position-relative" id="navbar">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4 col-md-4">
+                <ul class="social-profile style-one list-unstyled">
+                    <li>
+                        <a href="https://www.instagram.com/" target="_blank">
+                            <img src="{{ url_for('static', filename='assets/img/icons/instagram-blue.svg') }}" alt="Instagram">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 col-5 text-center">
+                <img src="{{ url_for('static', filename='images/logo-text.png') }}" style="width: 120px;" alt="">
+            </div>
+            <div class="col-md-4 col-7">
+                <ul class="user-options d-flex align-items-center justify-content-end list-unstyle">
+                    <li>
+                        <a class="navbar-toggler" data-bs-toggle="offcanvas" href="#navbarOffcanvas" role="button"
+                           aria-controls="navbarOffcanvas">
+                            <img src="{{ url_for('static', filename='assets/img/icons/sidebar-menu.svg') }}" alt="Sidebar Icon">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="responsive-navbar style-two offcanvas offcanvas-end border-0" data-bs-backdrop="static" tabindex="-1"
+     id="navbarOffcanvas">
+    <div class="offcanvas-header">
+        <a href="index.html" class="navbar-brand text-center">
+            <span class="logo-light d-block mx-auto text-white">ATATEK</span>
+        </a>
+        <button type="button" class="close-btn bg-transparent position-relative lh-1 p-0 border-0"
+                data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ri-close-line"></i>
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="responsive-menu">
+            <li><a href="https://alash.atatek.kz/">Шежіре</a></li>
+            <li><a href="https://alash.atatek.kz/my">Менің әулетім</a></li>
+            <li><a href="#">Жаңалықтар</a></li>
+            <li><a href="https://alash.atatek.kz/profile">Менің парақшам</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="container mt-45 pb-100">
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="content-left">
+                <div class="news-details">
+                    <div class="single-img round-6 mb-30">
+                        <img src="/static/images/news/{{ news.poster }}" alt="News" class="round-6">
+                    </div>
+                    <ul class="news-metainfo list-unstyle d-flex flex-wrap align-items-center mb-3">
+                        <li><i class="ri-time-line"></i>{{ news.created_at.strftime('%H:%M - %d.%m.%Y') }}</li>
+                        <li><i class="ri-message-3-line"></i>0 Пікір</li>
+                    </ul>
+                    <div class="news-content">
+                        {{ news.content | safe }}
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+
+        <div class="col-xl-4 ps-xxl-4">
+            <div class="sidebar style-two mt-0 fixed-wrap">
+                <div class="sidebar-widget">
+                    <div class="author-widget">
+                        <h2 class="fs-36 fw-semibold ls-3 mb-35">{{  page.title }}</h2>
+                        <img src="/static/images/news/sites/{{ settings.logo }}" class="author-avatar d-inline-block mb-40">
+                        <h5 class="fs-22 ls-3 mb-15">{{  page.title }} жаңалықтары туралы бетке қош келдіңіз</h5>
+                        <p class="mb-0">{{ settings.description }}</p>
+                    </div>
+                </div>
+                <div class="sidebar-widget">
+                    <h5 class="fs-22 fw-semibold lh-1 ls-3 mb-25">Танымал адамдар</h5>
+                    <div class="popular-news-widget">
+                        {% for person in popular %}
+                            <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start">
+                                <div class="rounded-circle">
+                                    <img src="/static/images/popular/{{ person.image }}" style="width: 100px; height: 100px; object-fit: cover" alt="Image" class="rounded-circle">
+                                </div>
+                                <div class="news-info">
+                                    <h3 class="fs-22 fw-semibold ls-3 mb-0">
+                                        <a href="popular/{{ person.id }}" class="hover-anim-blue">
+                                            {{person.fullname}}
+                                        </a>
+                                    </h3>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="footer-wrap style-one bg-title ptb-100">
+    <div class="container">
+        <div class="footer-top">
+            <div class="row">
+                <div class="col-lg-4 mb-md-15">
+                    <div class="footer-widget">
+                        <a href="index.html" class="logo d-block text-white">ATATEK</a>
+
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="footer-widget">
+                        <ul class="footer-menu style-two list-unstyled d-flex flex-wrap align-items-center justify-content-lg-end">
+                            <li><a href="#">Басты бет</a></li>
+                            <li><a href="#">Шежіре</a></li>
+                            <li><a href="#">Менің әулетім</a></li>
+                            <li><a href="#">Статистика</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="row align-items-center">
+                <div class="col-md-8 pe-xxl-5">
+                    <p class="copyright-text text-offwhite fs-15 mb-0"><span class="text-white">Copyright:</span> 2024-ATATEK
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="social-profile style-one text-md-end list-unstyled">
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank">
+                                <i class="ri-instagram-line"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<div id="progress-wrap" class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path id="progress-path" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+</div>
+
+<script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/swiper-bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/aos.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</body>
+</html>

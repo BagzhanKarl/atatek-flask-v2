@@ -7,6 +7,9 @@
         <style>
         .atatek-bg-{{ item.id }}{
             background: url("/static/images/news/{{ item.poster }}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            object-fit: cover;
         }
         </style>
         <div class="swiper-slide">
@@ -37,7 +40,7 @@
         <div class="col-xl-4 col-md-6">
             <div class="thumbnail-news-card style-one d-flex flex-wrap align-items-md-center align-items-start mb-25">
                 <div class="news-img rounded-circle">
-                    <img src="/static/images/news/{{ item.poster }}" alt="News" style="width: 119px; border-radius: 6px; height: 119px; image-orientation: flip">
+                    <img src="/static/images/news/{{ item.poster }}" alt="News" style="width: 119px; object-fit: cover; border-radius: 6px; height: 119px;">
                 </div>
                 <div class="news-info">
                     <ul class="news-metainfo list-unstyle">
@@ -59,7 +62,7 @@
         <div class="col-md-6">
         <div class="news-card mb-50">
             <div class="hover-anim-img round-6 overflow-hidden mb-28">
-                <img src="/static/images/news/{{ item.poster }}" alt="News" class="round-6 transition">
+                <img src="/static/images/news/{{ item.poster }}" alt="News" style="object-fit: cover !important;" class="round-6 transition">
             </div>
             <div class="news-info">
                 <ul class="news-metainfo list-unstyle mb-12">
@@ -67,7 +70,7 @@
                     <li><i class="ri-message-3-line"></i>0 пікір</li>
                 </ul>
                 <h3 class="fs-30 fw-semibold ls-3 mb-13">
-                    <a href="news-details-style-one.html" class="hover-anim-blue">
+                    <a href="page-detail.html" class="hover-anim-blue">
                         {{  item.title }}
                     </a>
                 </h3>
@@ -84,8 +87,7 @@
 {% block newsletter_style %}
     <style>
         .page-newsletter{
-
-            background: url("static/images/news/sites/{{ settings.newsletter_bg }}") !important;
+            background: url("/static/images/news/sites/{{ settings.newsletter_bg }}") !important;
         }
     </style>
 {% endblock %}
@@ -97,7 +99,7 @@
             </div>
             <div class="news-info">
                 <h3 class="fs-22 fw-semibold ls-3 mb-0">
-                    <a href="news/popular/{{ person.id }}" class="hover-anim-blue">
+                    <a href="popular/{{ person.id }}" class="hover-anim-blue">
                         {{person.fullname}}
                     </a>
                 </h3>

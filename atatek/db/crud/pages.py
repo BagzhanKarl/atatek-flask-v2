@@ -82,3 +82,8 @@ def add_popular_person(fullname, page, image, content, birthday=None):
 def get_all_popular_persons_by_page_id(page_id):
     popular_persons = PopularPeople.query.filter_by(page=page_id).all()
     return popular_persons
+
+
+def get_one_popular_person_by_id(id):
+    popular_person = PopularPeople.query.filter_by(id=id).first()
+    return popular_person

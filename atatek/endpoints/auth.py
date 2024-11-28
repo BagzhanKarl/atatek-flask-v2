@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request, redirect, session, make_response
+from flask import Blueprint, render_template, url_for, request, redirect, session, make_response, jsonify
 
 from atatek.db import get_all_pages, get_parents_list_by_id
 from atatek.db.crud.users import create_or_update_user, create_referral, login_user
@@ -96,6 +96,7 @@ def register_site():
         pageList = []
         for item in page:
             parents = get_parents_list_by_id(item.tree_id)
+            parents = parents[::-1]
             search = ''
             for parent in parents:
                 search += parent['name'] + " "
@@ -109,3 +110,20 @@ def register_site():
 @auth.route('/register/verify', methods=['GET', 'POST'])
 def register_verify():
     return redirect(url_for('auth.login'))
+
+
+@auth.route('/register/site/page/<int:step>', methods=['GET', 'POST'])
+def register_step(step):
+    pages = get_all_pages()
+    response = []
+    for page in pages:
+        list = get_parents_list_by_id(page.tree_id)
+        list = list[::-1]
+        third_element = list[2]
+        if step == third_element['id']:
+            response.append({
+                "id": page.id,
+                "title": page.title,
+            })
+
+    return jsonify({"stat": response})

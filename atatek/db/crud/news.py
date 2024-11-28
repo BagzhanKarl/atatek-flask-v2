@@ -18,6 +18,10 @@ def get_news_all_by_page_id(page):
     news = News.query.filter_by(page=page).all()
     return news
 
+def get_news_by_id(id):
+    news = News.query.get(id)
+    return news
+
 def create_site_settings(page, description, logo=None, newsletter_bg=None, icon=None):
     exict_settings = NewsSettings.query.filter_by(page=page).first()
     if exict_settings:
