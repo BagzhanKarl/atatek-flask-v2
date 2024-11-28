@@ -45,7 +45,7 @@ def show_news_page_uly_by_id(breed1, breed2, breed3, news_id):
     return render_template('news/page-detail.html', settings=site_settings, news=news, popular=popular, page=page)
 
 
-@pages.route('/uly/<string:breed1>/<string:breed2>/<string:breed3>/news/popular/<int:person>')
+@pages.route('/uly/<string:breed1>/<string:breed2>/<string:breed3>/popular/<int:person>')
 @token_required
 def show_person_page_uly_by_id(breed1, breed2, breed3, person):
     page = get_page_by_breeds(breed1, breed2, breed3)
