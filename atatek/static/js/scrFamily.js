@@ -75,6 +75,8 @@ async function loadFamilyData() {
 async function initFamilyTree() {
     const myFamily = await loadFamilyData(); // Ждем загрузки данных
 
+
+
     var family = new FamilyTree(document.getElementById("tree"), {
         mouseScrool: FamilyTree.action.none,
         template: "ataTek",
@@ -114,7 +116,13 @@ async function initFamilyTree() {
         },
     });
 
-    family.load(myFamily); // Загружаем преобразованные данные
+    family.on('update', function (sender, oldNode, newNode) {
+        console.log(oldNode);
+    });
+
+
+    family.load(myFamily);
+
 }
 
 // Инициализация дерева при загрузке страницы
