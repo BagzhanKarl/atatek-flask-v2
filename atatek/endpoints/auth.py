@@ -15,8 +15,8 @@ def login():
         if user['status'] == True:
             response = make_response(redirect(url_for('main.index')))
             # Устанавливаем куки для всех поддоменов
-            # response.set_cookie('token', user['token'], domain='.atatek.kz')
-            response.set_cookie('token', user['token'])
+            response.set_cookie('token', user['token'], domain='.atatek.kz')
+            # response.set_cookie('token', user['token'])
             return response
         else:
             return render_template('auth/login.html', errorText=user['data'])
