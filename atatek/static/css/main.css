@@ -242,3 +242,7 @@ section.main{
 
 .plus-btn{
 }
+
+.bft-edit-form{
+    z-index: 10200;
+}

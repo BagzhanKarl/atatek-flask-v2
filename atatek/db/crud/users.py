@@ -1,7 +1,7 @@
 from sqlalchemy import false
 from atatek.utils import hash_password, check_password, generate_jwt
 
-from atatek.db import db, User, Referral, Verify
+from atatek.db import db, User, Referral, Verify, Subscription, Role
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
@@ -61,7 +61,6 @@ def login_user(phone, password):
     except Exception as e:
         print(e)
         return {"status": False, "data": "Деректерді өңдеу кезінде қателік болды, кейінірек қайталаңыз"}
-
 
 # Get User by ID
 def get_user_by_id(user_id):
@@ -141,3 +140,34 @@ def delete_user(user_id):
 
 def get_all_user_list():
     return User.query.all()
+
+def get_all_moderator_list():
+    return User.query.filter_by(role=4).all()
+
+def create_subscription(user_id, role_id):
+    if role_id == 1 or role_id == 4 or role_id == 5:
+        create_or_update_user(id=user_id, role=role_id)
+        return True
+    else:
+        create_or_update_user(id=user_id, role=role_id)
+        role = Role.query.get(role_id)
+        oldsubs = Subscription.query.filter_by(user=user_id, is_active=True).first()
+        if oldsubs:
+            db.session.delete(oldsubs)
+        subs = Subscription(
+            user=user_id,
+            role=role.id,
+            addchild=role.add_child,
+            addinfo=role.add_info,
+            personal=role.personal_page,
+            allpage=role.all_pages,
+            days=30,
+            is_active=True
+        )
+        db.session.add(subs)
+        db.session.commit()
+        return True
+        #print('Создаем запись на месяц и поменяем таблицу')
+
+def get_active_subs_by_id(user_id):
+    return Subscription.query.filter_by(user=user_id, is_active=True).first()

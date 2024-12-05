@@ -1,0 +1,213 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Алаш
+{% endblock %}
+
+{% block my_page %} {{ page.title }} {% endblock %}
+{% block newsmy %} {{ page.title }} {% endblock %}
+{% block mymb %} {{ page.title }} {% endblock %}
+{% block newsmymb %} {{ page.title }} {% endblock %}
+
+{% block body %}
+<section class="main">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-sm-6">
+            <form class="card" action="/my/family/start" method="POST">
+                <div class="card-header">
+                    
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="step" id="step1">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="">Атаңыздың есімі</label>
+                                    <input type="text" name="gf_first_name" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label for="">Әжеңіздің есімі</label>
+                                    <input type="text" name="gm_first_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="">Атаңыздың тегі</label>
+                                    <input type="text" name="gf_last_name" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label for="">Әжеңіздің тегі</label>
+                                    <input type="text" name="gm_last_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="">Атаңыздың туған күні</label>
+                                    <input type="date" name="gf_birth_date" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label for="">Әжеңіздің туған күні</label>
+                                    <input type="date" name="gm_birth_date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="d-flex align-items-center gap-2 mb-3">
+                                        <input type="radio" name="gf_alive" id="gf_alive" class="form-check" value="alive" checked>
+                                        <label for="gf_alive">Тірі</label>
+                                        <input type="radio" id="gf_dead" name="gf_alive" class="form-check" value="dead">
+                                        <label for="gf_dead">Қайтыс болды</label>
+                                    </div>
+                                    <div class="gf_dd" style="display: none">
+                                        <label for="">Атаңыздың қайтқан күні</label>
+                                        <input type="date" name="gf_death_date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="d-flex align-items-center gap-2 mb-3">
+                                        <input type="radio" name="gm_alive" id="gm_alive" class="form-check" value="alive" checked>
+                                        <label for="gm_alive">Тірі</label>
+                                        <input type="radio" id="gm_dead" name="gm_alive" class="form-check" value="dead">
+                                        <label for="gm_dead">Қайтыс болды</label>
+                                    </div>
+                                    <div class="gm_dd" style="display: none">
+                                        <label for="">Әжеңіздің қайтқан күні</label>
+                                        <input type="date" name="gm_death_date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step" id="step2" style="display: none">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="">Әкеңіздің есімі</label>
+                                    <input type="text" name="father_first_name" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label for="">Анаңыздың есімі</label>
+                                    <input type="text" name="mother_first_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="">Әкеңіздің тегі</label>
+                                    <input type="text" name="father_last_name" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label for="">Анаңыздың тегі</label>
+                                    <input type="text" name="mother_last_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="">Әкеңіздің туған күні</label>
+                                    <input type="date" name="father_birth_date" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label for="">Анаңыздың туған күні</label>
+                                    <input type="date" name="mother_birth_date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="d-flex align-items-center gap-2 mb-3">
+                                        <input type="radio" name="father_alive" id="father_alive" class="form-check" value="alive" checked>
+                                        <label for="father_alive">Тірі</label>
+                                        <input type="radio" id="father_dead" name="father_alive" class="form-check" value="dead">
+                                        <label for="father_dead">Қайтыс болды</label>
+                                    </div>
+                                    <div class="f_dd" style="display: none">
+                                        <label for="">Әкеңіздің қайтқан күні</label>
+                                        <input type="date" name="father_death_date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="d-flex align-items-center gap-2 mb-3">
+                                        <input type="radio" name="mother_alive" id="mother_alive" class="form-check" value="alive" checked>
+                                        <label for="mother_alive">Тірі</label>
+                                        <input type="radio" id="mother_dead" name="mother_alive" class="form-check" value="dead">
+                                        <label for="mother_dead">Қайтыс болды</label>
+                                    </div>
+                                    <div class="m_dd" style="display: none">
+                                        <label for="">Анаңыздың қайтқан күні</label>
+                                        <input type="date" name="mother_death_date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between text-end" id="back_and_submit_btns" style="display: none !important;">
+                        <button class="btn btn-primary" type="button" id="backBtn">Артқа</button>
+                        <button class="btn btn-primary" type="submit" id="submit">Жалғастыру</button>
+                    </div>
+                    <div class="text-end" id="next-btn-block">
+                        <button class="btn btn-primary" type="button" id="nextBtn">Келесі</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script>
+        let stepCount = 2
+        let currentStep = 1
+        $(document).ready(function (){
+            $('#nextBtn').on('click', function (){
+                $('#next-btn-block').hide();
+                $('#back_and_submit_btns').show();
+                $('#step1').hide();
+                $('#step2').show();
+            })
+            $('#backBtn').on('click', function (){
+                $('#back_and_submit_btns').attr('style', 'display: none !important;');
+                $('#next-btn-block').show();
+                $('#step1').show();
+                $('#step2').hide();
+            })
+            $('input[name="gm_alive"]').change(function () {
+                if ($('#gm_alive').is(':checked')) {
+                    // Если выбрано "Тірі", скрываем поле
+                    $('.gm_dd').hide();
+                } else {
+                    // Если выбрано "Қайтыс болды", показываем поле
+                    $('.gm_dd').show();
+                }
+            });
+            $('input[name="gf_alive"]').change(function () {
+                if ($('#gf_alive').is(':checked')) {
+                    // Если выбрано "Тірі", скрываем поле
+                    $('.gf_dd').hide();
+                } else {
+                    // Если выбрано "Қайтыс болды", показываем поле
+                    $('.gf_dd').show();
+                }
+            });
+            $('input[name="father_alive"]').change(function () {
+                if ($('#father_alive').is(':checked')) {
+                    // Если выбрано "Тірі", скрываем поле
+                    $('.f_dd').hide();
+                } else {
+                    // Если выбрано "Қайтыс болды", показываем поле
+                    $('.f_dd').show();
+                }
+            });
+            $('input[name="mother_alive"]').change(function () {
+                if ($('#mother_alive').is(':checked')) {
+                    // Если выбрано "Тірі", скрываем поле
+                    $('.m_dd').hide();
+                } else {
+                    // Если выбрано "Қайтыс болды", показываем поле
+                    $('.m_dd').show();
+                }
+            });
+        })
+    </script>
+{% endblock %}

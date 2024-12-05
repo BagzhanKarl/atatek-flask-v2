@@ -6,3 +6,4 @@ from .subscription import *
 from .tickets import *
 from .tree import *
 from .user import *
+from .family import *

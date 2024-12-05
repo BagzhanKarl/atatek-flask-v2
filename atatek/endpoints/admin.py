@@ -3,9 +3,9 @@ import os
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 
 from atatek.db import get_page_by_id, get_moderator_list_by_page_id, delete_moderator, \
-    get_all_popular_persons_by_page_id, get_all_roles, get_role_by_id, update_role
+    get_all_popular_persons_by_page_id, get_all_roles, get_role_by_id, update_role, get_place_by_osm
 from atatek.db.crud.news import create_news_admin, get_news_all_by_page_id, create_site_settings
-from atatek.db.crud.users import get_user_by_id
+from atatek.db.crud.users import get_user_by_id, create_subscription, get_active_subs_by_id
 from atatek.utils import token_required
 from atatek.utils.icons import save_file
 
@@ -115,10 +115,15 @@ def admin_site_news_new(id):
 @admin.route('/user/<int:id>')
 @token_required
 def admin_user(id):
+    user = get_user_by_id(id)
+    address = get_place_by_osm(user.address)
+    UserRole = get_role_by_id(user.role)
+    roles = get_all_roles()
+    subs = get_active_subs_by_id(user.id)
     role = request.role
     if role != 5:
         return redirect(url_for('main.index'))
-    return render_template('admin/site.html')
+    return render_template('admin/user.html', user=user, roles=roles, address=address, role=UserRole, subs=subs)
 
 @admin.route('/tickets')
 @token_required
@@ -181,3 +186,11 @@ def admin_role(id):
 def admin_moderator_delete(id, page):
     delete = delete_moderator(id)
     return redirect(url_for('admin.admin_site', id=page))
+
+
+@admin.route('/user/change/role', methods=['POST'])
+def admin_user_change():
+    user = request.form['user_id']
+    role = request.form['role']
+    create_subscription(user, role)
+    return redirect(url_for('admin.admin_user', id=user))

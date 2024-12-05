@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request, render_template, redirect, url_fo
 from atatek.db import get_childs_by_parent, read_tree_by_id, read_tree_info_by_id, add_create_ticket, \
     create_ticket_crud, edit_ticket_crud, create_tree, delete_tree, edit_tree_crud, create_or_update_tree_info, \
     create_new_page, get_all_pages, create_moderator, get_moderator_list_by_page_id, add_popular_person
-from atatek.db.crud.users import get_all_user_list, create_or_update_user
+from atatek.db.crud.users import get_all_user_list, create_or_update_user, get_all_moderator_list
 from atatek.utils import get_data, api_token_required, token_required
 from atatek.utils.icons import save_file
 
@@ -210,7 +210,7 @@ def get_pages():
 @api.route('/admin/ajax/user/option', methods=['POST'])
 @token_required
 def get_user_option():
-    users = get_all_user_list()
+    users = get_all_moderator_list()
     moderators = get_moderator_list_by_page_id(request.form['page'])
     moderator_user_ids = [moderator.user_id for moderator in moderators]
     return render_template('modals/user_options.html', users=users, moderator=moderator_user_ids)
