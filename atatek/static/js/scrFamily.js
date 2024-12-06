@@ -42,7 +42,7 @@ FamilyTree.templates.ataTek_female.node = `
 
 async function loadFamilyData() {
     try {
-        const response = await fetch("http://127.0.0.1:5000/my/family/get/my");
+        const response = await fetch("/my/family/get/my");
         if (!response.ok) {
             throw new Error("Failed to fetch family data");
         }
