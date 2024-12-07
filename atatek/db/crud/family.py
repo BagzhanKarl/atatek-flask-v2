@@ -44,7 +44,7 @@ def get_my_tree(user):
         formatted_death = datetime.strptime(item.death, "%Y-%m-%d").strftime("%d.%m.%Y") if item.death else None
         result.append({
             "id": item.id,
-            "name": item.name + "(сіз)" if item.user == user else item.name,
+            "name": item.name ,
             "pids": item.pids if isinstance(item.pids, list) else [item.pids] if item.pids else None,
             "gender": item.gender,
             "birthday": formatted_birthday,
