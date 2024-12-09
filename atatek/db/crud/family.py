@@ -48,11 +48,6 @@ def get_my_tree(user):
     result = []
 
     for item in family:
-        # Используем правильный формат для даты
-        formatted_birthday = datetime.strptime(item.birthday, "%d.%m.%Y").strftime(
-            "%d.%m.%Y") if item.birthday else None
-        formatted_death = datetime.strptime(item.death, "%d.%m.%Y").strftime("%d.%m.%Y") if item.death else None
-
         data = item.pids
         pids = [x.strip() for x in data.split(',')] if data else []
 
@@ -62,7 +57,7 @@ def get_my_tree(user):
             for pid in pids:
                 child = Family.query.get(pid)
                 if child:
-                    child_birthday = datetime.strptime(child.birthday, "%d.%m.%Y") if child.birthday else None
+                    child_birthday = datetime.strptime(child.birthday, "%Y-%m-%d") if child.birthday else None
                     children.append((child, child_birthday))
 
             # Сортируем детей по дате рождения (если дата указана)
@@ -75,8 +70,8 @@ def get_my_tree(user):
             "name": item.name,
             "pids": pids,
             "gender": item.gender,
-            "birthday": formatted_birthday,
-            "death": formatted_death,
+            "birthday": item.birthday,
+            "death": item.gender,
             "alive": item.alive,
             "fid": item.fid if item.fid else None,
             "mid": item.mid if item.mid else None,

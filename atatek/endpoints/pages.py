@@ -19,7 +19,7 @@ def show_page_uly(breed1, breed2, breed3):
     page = get_page_by_breeds(breed1, breed2, breed3)
     if page.juz == 'Ұлы жүз':
         list = get_parents_list_by_id(page.tree_id, lastTouch=True)
-        return render_template('main/main.html', page=page, set=settings, start=json.dumps(list))
+        return render_template('main/page.html', page=page, set=settings, start=json.dumps(list))
     else:
         return redirect(url_for('main.index'))
 
