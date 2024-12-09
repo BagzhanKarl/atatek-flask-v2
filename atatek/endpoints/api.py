@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, jsonify, request, render_template, redirect, url_for
+from flask import Blueprint, jsonify, request, render_template, redirect, url_for, Response
 
 from atatek.db import get_childs_by_parent, read_tree_by_id, read_tree_info_by_id, add_create_ticket, \
     create_ticket_crud, edit_ticket_crud, create_tree, delete_tree, edit_tree_crud, create_or_update_tree_info, \
@@ -258,3 +258,8 @@ def change_user_role(id):
         role=id
     )
     return redirect(url_for('auth.logout'))
+
+@api.route('/FamilyTreeJS', methods=('GET', 'POST'))
+def api_tree_data():
+    response_content = "<pre>GET: ATATEK FamilyTreeJS</pre>"
+    return Response(response_content, content_type="text/html")

@@ -12,4 +12,6 @@ class Subscription(db.Model):
     allpage = db.Column(db.Boolean, nullable=False)
     start_date = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     days = db.Column(db.Integer, nullable=False)
+    family_person_count = db.Column(db.Integer, nullable=False, default=0)
+
     is_active = db.Column(db.Boolean, nullable=False, default=True)

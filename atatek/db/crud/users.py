@@ -161,6 +161,7 @@ def create_subscription(user_id, role_id):
             addinfo=role.add_info,
             personal=role.personal_page,
             allpage=role.all_pages,
+            family_person_count=role.family_person_count,
             days=30,
             is_active=True
         )

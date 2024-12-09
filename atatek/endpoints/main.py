@@ -3,9 +3,10 @@ import os
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 
 from atatek.db import User, get_place_by_osm, get_parents_list_by_id, get_page_by_id, get_user_tickets_all, \
-    get_user_ticket_by_id, get_all_roles
-from atatek.db.crud.family import check_user_family, create_record_for_table, update_record_for_table, get_my_tree
-from atatek.db.crud.users import get_user_by_id
+    get_user_ticket_by_id, get_all_roles, get_role_by_id
+from atatek.db.crud.family import check_user_family, create_record_for_table, update_record_for_table, get_my_tree, \
+    create_record_by_ui, update_record_by_ui, get_tree_count
+from atatek.db.crud.users import get_user_by_id, get_active_subs_by_id
 from atatek.utils import token_required
 
 main = Blueprint('main', __name__)
@@ -113,7 +114,22 @@ def family():
     role = request.role
     user = request.user_id
     if check_user_family(user):
-        return render_template('family/main.html', page=get_page_by_id(page))
+        readonly = False
+        count = get_tree_count(user)
+
+        if role == 1:
+            userAccess = get_role_by_id(role)
+            if userAccess.family_person_count > count:
+                readonly = True
+        if role == 2 or role == 3 or role == 4:
+            userAccess = get_active_subs_by_id(user)
+            if userAccess.family_person_count > count:
+                readonly = True
+        if role == 5:
+            readonly = True
+        print(readonly)
+
+        return render_template('family/main.html', page=get_page_by_id(page), readOnlyData=readonly)
     else:
         return render_template('family/start.html', page=get_page_by_id(page), set=settings)
 
@@ -169,12 +185,65 @@ def start_family():
     update_record_for_table(gf.id, gm.id)
     update_record_for_table(father.id, mother.id)
     userData = get_user_by_id(user)
-    me = create_record_for_table(
-        name=userData.first_name + ' ' + userData.last_name,
-        fid=father.id,
-        mid=mother.id,
-        user=userData.id,
-        created_by=user,
-        gender='male',
-    )
     return redirect(url_for('main.family'))
+
+@main.route('/my/family/update/my', methods=['POST'])
+@token_required
+def update_family():
+    user = request.user_id
+    # Получаем JSON-данные из тела запроса
+    data = request.get_json()
+
+    # Проверяем, получены ли данные
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    add = data.get('add', [])
+    update = data.get('update', [])
+    remove = data.get('remove', [])
+
+    add = add[::-1]
+    last = None
+    print(add)
+    for item in add:
+        id = item.get('id')
+        gender = item.get('gender')
+        mid = item.get('mid', None)
+        fid = item.get('fid', None)
+        pids = item.get('pids', None)
+
+        adder = create_record_by_ui(
+            gender=gender,
+            mid=mid,
+            fid=fid,
+            pids=pids,
+            created_by=user,
+            bid=id,
+        )
+    print(update)
+    for item in update:
+        id = item.get('id')
+        name = item.get('name')
+        gender = item.get('gender')
+        birthday = item.get('birthday')
+        mid = item.get('mid', None)
+        fid = item.get('fid', None)
+        pids = item.get('pids', None)
+        alive = True if item.get('alive') == 'true' else False
+        updater = update_record_by_ui(
+            id=id,
+            name=name,
+            gender=gender,
+            birthday=birthday,
+            mid=mid,
+            fid=fid,
+            pids=pids,
+            alive=alive
+        )
+        print(alive)
+
+    # Возвращаем полученные данные в формате JSON для проверки
+    return jsonify({
+        "user_id": user,
+        "received_data": data
+    }), 200

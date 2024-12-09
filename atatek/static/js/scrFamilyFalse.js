@@ -54,6 +54,7 @@ async function loadFamilyData() {
                 id: member.id,
                 name: member.name,
                 gender: member.gender,
+                alive: member.alive,
                 birthday: member.birthday,
             };
 
@@ -72,56 +73,58 @@ async function loadFamilyData() {
     }
 }
 
+async function updateNotes(add, update, remove) {
+    const response = await fetch("/my/family/update/my", {
+        method: "POST", // Указываем метод POST
+        headers: {
+            "Content-Type": "application/json", // Тип данных JSON
+        },
+        body: JSON.stringify({ add, update, remove }), // Преобразуем объект в JSON-строку
+    });
+
+    if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+    }
+    console.log(response);
+    window.location.reload();
+    return await response.json(); // Предполагаем, что сервер возвращает JSON
+}
+
+
 async function initFamilyTree() {
     const myFamily = await loadFamilyData(); // Ждем загрузки данных
 
-
-
     var family = new FamilyTree(document.getElementById("tree"), {
-        mouseScrool: FamilyTree.action.none,
+        mouseScrool: FamilyTree.action.scroll,
         template: "ataTek",
         enableSearch: false,
-        nodeTreeMenu: true,
         nodeBinding: {
             name: "name",
             birthday: "birthday",
             death: "death",
         },
-        nodeMenu: {
-            edit: { text: "Өзгерту" }
-        },
         editForm: {
+            readOnly: true,
             generateElementsFromFields: false,
             elements: [
                 { type: 'textbox', label: 'Толық есімі', binding: 'name' },
                 { type: 'textbox', label: 'Туған күні', binding: 'birthday' },
+                { type: 'select', label: 'Статус',  options: [
+                    {value: true, text: 'Тірі'},
+                    {value: false, text: 'Қайтыс болды'}], binding: 'alive'}
             ],
-            cancelBtn: 'Жабу',
-            saveAndCloseBtn: 'Сақтау',
-            addMore: false,
-            buttons:  {
-                edit: {
-                    icon: FamilyTree.icon.edit(24,24,'#fff'),
-                    text: 'Өзгерту',
-                    hideIfEditMode: true,
-                    hideIfDetailsMode: false
-                },
-                share: {
-                    icon: FamilyTree.icon.share(24,24,'#fff'),
-                    text: 'Бөлісу'
-                },
-                pdf: null
-            },
-            titlePhoto: false,
+            
         },
+
     });
 
     family.on('update', function (sender, oldNode, newNode) {
-        console.log(oldNode);
+        updateNotes(oldNode.addNodesData, oldNode.updateNodesData, oldNode.removeNodeId);
     });
 
 
     family.load(myFamily);
+    console.log(myFamily)
 
 }
 
