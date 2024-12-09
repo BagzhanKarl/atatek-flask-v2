@@ -98,7 +98,7 @@
                         <div class="form-text mb-3">"Сұраныс жіберу" батырмасын басқаннан кейін сіз жіберген ақпарат админдермен тексеріледі</div>
 
                         <div class="btn-part d-flex justify-content-between">
-                            <button type="button" onclick="newField()" class="btn btn-outline-primary" style="font-size: 14px !important;">Жаңа жол қосу</button>
+                            <button type="button" onclick="newField()" class="btn btn-outline-primary" style="font-size: 14px !important;"><ion-icon style="display: flex; justify-content: center; align-items: center; font-size: 24px" name="add-outline"></ion-icon></button>
                             <button class="btn btn-primary" style="font-size: 14px !important;">Сұраныс жіберу</button>
                         </div>
                     </form>
@@ -155,10 +155,10 @@
         {% elif role == 5 %}
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" data-page="info">Ақпарат</a>
+                    <a class="nav-link active"  data-page="info">Ақпарат</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-page="add">Енгізу</a>
+                    <a class="nav-link" style="padding: 10px !important;" data-page="add">Ұрпақ қосу</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-page="edit">Өзгерту</a>
@@ -195,7 +195,7 @@
                             </div>
                         </div>
                         <div class="btn-part d-flex justify-content-between">
-                            <button type="button" onclick="newField()" class="btn btn-outline-primary" style="font-size: 14px !important;">Жаңа жол қосу</button>
+                            <button type="button" onclick="newField()" class="btn btn-outline-primary" style="font-size: 14px !important;"><ion-icon style="display: flex; justify-content: center; align-items: center; font-size: 24px" name="add-outline"></ion-icon></button>
                             <button class="btn btn-primary" style="font-size: 14px !important;">Сақтау</button>
                         </div>
                     </form>
@@ -246,7 +246,7 @@
                     <div class="text-center">
                         <h3>"{{ item.name }}" жазбасын өшіреміз бе?</h3>
                         <p>Жойылған ақпарат қайтадан кері қайтарылмайды, тек жаңадан қоса аласыз. </p>
-                        <p><a href="/api/admin/delete/{{ item.id }}" class="btn btn-danger">Ия өшіру</a></p>
+                        <p><button  onclick="deleteNode({{ item.id }})" class="btn btn-danger">Ия өшіру</button></p>
                     </div>
                 </div>
                 <div class="tab" style="display: none" id="newsite">
@@ -319,6 +319,23 @@
 <div class="image-pop" style="display: none" onclick="BigImghide()">
     <img src="static/images/icons/{{ item_more.tree_full_icon }}" style="height: 300px; width: 300px; object-fit: cover">
 </div>
+    <script>
+        function deleteNode(id) {
+            Swal.fire({
+                title: "Жазбаны өшіреміз бе?",
+                text: "Жойылған ақпарат қайтадан кері қайтарылмайды, тек жаңадан қоса аласыз.?",
+                icon: "question",
+                showDenyButton: true,
+                confirmButtonText: "Ия жою",
+                denyButtonText: `Жоқ, бастарту`
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    window.location.href = `/api/admin/delete/${id}`;
+                }
+            });
+        }
+    </script>
 <script>
     function BigImgshow(){
         $('.image-pop').show();

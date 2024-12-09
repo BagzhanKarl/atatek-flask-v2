@@ -193,7 +193,7 @@ section.main{
 }
 .modal-container{
     z-index: 1010;
-    width: 30%;
+    width: 40%;
     height: 100%;
     background: var(--white);
     right: 0;
@@ -206,13 +206,13 @@ section.main{
 
 @media (max-width: 1200px) {
     .modal-container {
-        width: 40%;
+        width: 55%;
     }
 }
 
 @media (max-width: 992px) {
     .modal-container {
-        width: 50%;
+        width: 70%;
     }
 }
 

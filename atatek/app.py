@@ -24,6 +24,9 @@ app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(install)
 
 
+@app.route('/release')
+def release():
+    return render_template('release.html')
 
 with app.app_context():
     db.create_all()
