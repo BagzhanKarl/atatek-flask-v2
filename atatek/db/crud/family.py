@@ -71,7 +71,7 @@ def get_my_tree(user):
             "pids": pids,
             "gender": item.gender,
             "birthday": item.birthday,
-            "death": item.gender,
+            "death": item.death,
             "alive": item.alive,
             "fid": item.fid if item.fid else None,
             "mid": item.mid if item.mid else None,
