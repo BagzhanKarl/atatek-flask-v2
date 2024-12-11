@@ -1,0 +1,258 @@
+{% extends 'admin/base.html' %}
+
+{% block css %}
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.css" rel="stylesheet">
+    <style>
+        .card {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: none;
+        }
+        .form-label {
+            font-weight: 600;
+        }
+        .section-header {
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+Й
+{% block content %}
+
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Конфигурация генеалогического дерева</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="section-header">
+                            <h5 class="mb-0">Имя</h5>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name-font" class="form-label">Размер шрифта</label>
+                            <input type="text" class="form-control" id="name-font" name="name[font]" value="{{ settings.name.font }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name-color" class="form-label">Цвет</label>
+                            <input type="color" class="form-control form-control-color" id="name-color" name="name[color]" value="{{ settings.name.color }}" title="Выберите цвет">
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label for="name-x" class="form-label">X позиция</label>
+                                <input type="number" class="form-control" id="name-x" name="name[x]" value="{{ settings.name.x }}" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="name-y" class="form-label">Y позиция</label>
+                                <input type="number" class="form-control" id="name-y" name="name[y]" value="{{ settings.name.y }}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="section-header">
+                            <h5 class="mb-0">Дата рождения</h5>
+                        </div>
+                        <div class="mb-3">
+                            <label for="birthday-font" class="form-label">Размер шрифта</label>
+                            <input type="text" class="form-control" id="birthday-font" name="birthday[font]" value="{{ settings.birthday.font }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="birthday-color" class="form-label">Цвет</label>
+                            <input type="color" class="form-control form-control-color" id="birthday-color" name="birthday[color]" value="{{ settings.birthday.color }}" title="Выберите цвет">
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label for="birthday-x" class="form-label">X позиция</label>
+                                <input type="number" class="form-control" id="birthday-x" name="birthday[x]" value="{{ settings.birthday.x }}" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="birthday-y" class="form-label">Y позиция</label>
+                                <input type="number" class="form-control" id="birthday-y" name="birthday[y]" value="{{ settings.birthday.y }}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="section-header">
+                            <h5 class="mb-0">Дата смерти</h5>
+                        </div>
+                        <div class="mb-3">
+                            <label for="death-font" class="form-label">Размер шрифта</label>
+                            <input type="text" class="form-control" id="death-font" name="death[font]" value="{{ settings.death.font }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="death-color" class="form-label">Цвет</label>
+                            <input type="color" class="form-control form-control-color" id="death-color" name="death[color]" value="{{ settings.death.color }}" title="Выберите цвет">
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label for="death-x" class="form-label">X позиция</label>
+                                <input type="number" class="form-control" id="death-x" name="death[x]" value="{{ settings.death.x }}" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="death-y" class="form-label">Y позиция</label>
+                                <input type="number" class="form-control" id="death-y" name="death[y]" value="{{ settings.death.y }}" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="section-header">
+                            <h5 class="mb-0">Связи</h5>
+                        </div>
+                        <div class="mb-3">
+                            <label for="link-stroke" class="form-label">Обводка</label>
+                            <input type="color" class="form-control form-control-color" id="link-stroke" value="{{ settings.link.stroke }}" name="link[stroke]" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="link-size" class="form-label">Размер</label>
+                            <input type="text" class="form-control" id="link-size" value="{{ settings.link.size }}" name="link[size]" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="section-header">
+                            <h5 class="mb-0">Мужской узел</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label for="male-node-rx" class="form-label">RX</label>
+                                <input type="text" class="form-control" value="{{ settings.node_male.rx }}" id="male-node-rx" name="node_male[rx]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="male-node-ry" class="form-label">Ry</label>
+                                <input type="text" class="form-control" value="{{ settings.node_male.ry }}" id="male-node-ry" name="node_male[ry]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="male-node-width" class="form-label">Ширина</label>
+                                <input type="text" class="form-control" value="{{ settings.node_male.width }}" id="male-node-width" name="node_male[width]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="male-node-height" class="form-label">Высота</label>
+                                <input type="text" class="form-control" value="{{ settings.node_male.height }}" id="male-node-height" name="node_male[height]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="male-node-width" class="form-label">Цвет узла</label>
+                                <input type="color" class="form-control form-control-color" value="{{ settings.node_male.fill }}" id="male-node-fill" name="node_male[fill]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="male-node-stroke" class="form-label">Цвет обводки</label>
+                                <input type="color" class="form-control form-control-color" value="{{ settings.node_male.stroke }}" id="male-node-height" name="node_male[stroke]" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="section-header">
+                            <h5 class="mb-0">Женский узел</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label for="female-node-rx" class="form-label">Rx</label>
+                                <input type="text" class="form-control" value="{{ settings.node_female.rx }}" id="female-node-rx" name="node_female[rx]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="female-node-ry" class="form-label">Ry</label>
+                                <input type="text" class="form-control" value="{{ settings.node_female.ry }}" id="female-node-ry" name="node_female[ry]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="female-node-width" class="form-label">Ширина</label>
+                                <input type="text" class="form-control" value="{{ settings.node_female.width }}" id="female-node-width" name="node_female[width]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="female-node-height" class="form-label">Высота</label>
+                                <input type="text" class="form-control" value="{{ settings.node_female.height }}" id="female-node-height" name="node_female[height]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="female-node-width" class="form-label">Цвет узла</label>
+                                <input type="color" class="form-control form-control-color" value="{{ settings.node_female.fill }}" id="female-node-fill" name="node_female[fill]" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label for="female-node-stroke" class="form-label">Цвет обводки</label>
+                                <input type="color" class="form-control form-control-color" value="{{ settings.node_female.stroke }}" id="female-node-height" name="node_female[stroke]" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="section-header">
+                            <h5 class="mb-0">Настройки инициализации</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="enableSearch" class="form-label">Включить поиск</label>
+                                <select class="form-select" id="enableSearch" name="init_settings[enableSearch]" required>
+                                    <option value="true" {% if settings.init_settings.enableSearch == True %} selected {% endif %}>Да</option>
+                                    <option value="false" {% if settings.init_settings.enableSearch == False %} selected {% endif %}>Нет</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="nodeTreeMenu" class="form-label">Меню дерева узлов</label>
+                                <select class="form-select" id="nodeTreeMenu" name="init_settings[nodeTreeMenu]" required>
+                                    <option value="true" {% if settings.init_settings.nodeTreeMenu == True %} selected {% endif %}>Да</option>
+                                    <option value="false" {% if settings.init_settings.nodeTreeMenu == False %} selected {% endif %}>Нет</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="section-header">
+                            <h5 class="mb-0">Настройки формы и кнопок</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nodeMenu-edit-text" class="form-label">Текст редактирования</label>
+                                <input type="text" class="form-control" id="nodeMenu-edit-text" name="init_settings[nodeMenu][edit][text]" value="{{settings.init_settings.nodeMenu.edit.text}}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="editForm-cancelBtn" class="form-label">Кнопка отмены</label>
+                                <input type="text" class="form-control" id="editForm-cancelBtn" name="init_settings[editForm][cancelBtn]" value="{{settings.init_settings.editForm.cancelBtn}}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="editForm-saveAndCloseBtn" class="form-label">Кнопка сохранения</label>
+                                <input type="text" class="form-control" id="editForm-saveAndCloseBtn" name="init_settings[editForm][saveAndCloseBtn]" value="{{settings.init_settings.editForm.saveAndCloseBtn}}" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="section-header">
+                            <h5 class="mb-0">Дополнительные настройки</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="buttons-edit-text" class="form-label">Текст кнопки редактирования</label>
+                                <input type="text" class="form-control" id="buttons-edit-text" name="init_settings[buttons][edit][text]" value="{{ settings.init_settings.buttons.edit.text }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="buttons-share-text" class="form-label">Текст кнопки "Поделиться"</label>
+                                <input type="text" class="form-control" id="buttons-share-text" name="init_settings[buttons][share][text]" value="{{ settings.init_settings.buttons.share.text }}" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

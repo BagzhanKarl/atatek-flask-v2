@@ -12,6 +12,37 @@
 {% block body %}
 <script src="{{  url_for('static', filename='js/family.js') }}"></script>
 <div id="tree" style="width: 100%; height: 100vh;"></div>
+    <script>
+        FamilyTree.templates.ataTek = Object.assign({}, FamilyTree.templates.tommy);
+        FamilyTree.templates.ataTek.size = [230, 80];
+        FamilyTree.templates.ataTek.defs = ``;
+        FamilyTree.templates.ataTek.name =
+            `<text style="font-size: {{ set.name.font }};" fill="{{ set.name.color }}" x="{{ set.name.x }}" y="{{ set.name.y }}" text-anchor="start">{val}</text>`;
+        FamilyTree.templates.ataTek.birthday =
+            `<text style="font-size: {{ set.birthday.font }};" fill="{{ set.birthday.color }}" x="{{ set.birthday.x }}" y="{{set.birthday.y}}" text-anchor="start">{val}</text>`;
+        FamilyTree.templates.ataTek.death =
+            `<text style="font-size: {{set.death.font}};" fill="{{set.death.color}}" x="{{ set.death.x }}" y="{{ set.death.y }}" text-anchor="start">{val}</text>`;
+        FamilyTree.templates.ataTek.link =
+            `<path stroke="{{ set.link.stroke }}" stroke-width="{{set.link.size}}" fill="{{set.link.fill}}" data-l-id="[{id}][{child-id}]"
+            d="M{xa},{ya} L{xb},{yb} L{xc},{yc} L{xd},{yd}" />`;
+        FamilyTree.templates.ataTek.nodeMenuButton =
+            `<g style="cursor:pointer;" transform="matrix(1,0,0,1,205,18)" data-ctrl-n-menu-id="{id}">
+                <rect x="-4" y="-10" fill="#000000" fill-opacity="0" width="22" height="22"></rect>
+                <circle cx="2.5" cy="0" r="1.5" fill="rgb(255, 255, 255)" />
+                <circle cx="2.5" cy="5" r="1.5" fill="rgb(255, 255, 255)" />
+                <circle cx="2.5" cy="10" r="1.5" fill="rgb(255, 255, 255)" />
+            </g>`;
+        FamilyTree.templates.ataTek_male = Object.assign({}, FamilyTree.templates.ataTek);
+        FamilyTree.templates.ataTek_male.node = `
+            <rect rx="{{set.node_male.rx}}" ry="{{set.node_male.ry}}" x="{{set.node_male.x}}" y="{{set.node_male.y}}" width="{{set.node_male.width}}" height="{{set.node_male.height}}"
+            fill="{{set.node_male.fill}}" stroke="{{set.node_male.stroke}} stroke-width="{{set.node_male.stroke_width}}"></rect>
+        `;
+        FamilyTree.templates.ataTek_female = Object.assign({}, FamilyTree.templates.ataTek);
+        FamilyTree.templates.ataTek_female.node = `
+            <rect rx="{{set.node_female.rx}}" ry="{{set.node_female.ry}}" x="{{set.node_female.x}}" y="{{set.node_female.y}}" width="{{set.node_female.width}}" height="{{set.node_female.height}}"
+            fill="{{set.node_female.fill}}" stroke="{{set.node_female.stroke}} stroke-width="{{set.node_female.stroke_width}}"></rect>
+        `;
+    </script>
     {% if readOnlyData == True %}
         <script src="{{ url_for('static', filename='js/scrFamilyTrue.js') }}"></script>
     {% else %}

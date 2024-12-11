@@ -11,6 +11,7 @@ from atatek.utils import token_required
 
 main = Blueprint('main', __name__)
 settings_path = os.path.join(os.path.dirname(__file__), '../utils/settings.json')
+family_path = os.path.join(os.path.dirname(__file__), '../utils/package.json')
 
 @main.route('/')
 @token_required
@@ -108,7 +109,7 @@ def no_access():
 @main.route('/my/family')
 @token_required
 def family():
-    with open(settings_path, 'r') as file:
+    with open(family_path, 'r', encoding='utf-8') as file:
         settings = json.load(file)
     page = request.page
     role = request.role
@@ -129,7 +130,7 @@ def family():
             readonly = True
         print(readonly)
 
-        return render_template('family/main.html', page=get_page_by_id(page), readOnlyData=readonly)
+        return render_template('family/main.html', page=get_page_by_id(page), set=settings, readOnlyData=readonly)
     else:
         return render_template('family/start.html', page=get_page_by_id(page), set=settings)
 

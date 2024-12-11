@@ -1,3 +1,4 @@
+import json
 import os
 
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
@@ -10,6 +11,18 @@ from atatek.utils import token_required
 from atatek.utils.icons import save_file
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
+settings_path = os.path.join(os.path.dirname(__file__), '../utils/package.json')
+
+def parse_nested_keys(data):
+    """Преобразует ключи с квадратными скобками в вложенные словари."""
+    result = {}
+    for key, value in data.items():
+        parts = key.replace(']', '').split('[')
+        current = result
+        for part in parts[:-1]:
+            current = current.setdefault(part, {})
+        current[parts[-1]] = value
+    return result
 
 @admin.route('/')
 @token_required
@@ -194,3 +207,32 @@ def admin_user_change():
     role = request.form['role']
     create_subscription(user, role)
     return redirect(url_for('admin.admin_user', id=user))
+
+@admin.route('settings/myfamily', methods=['GET', 'POST'])
+def admin_myfamily():
+    if request.method == 'POST':
+        data = request.form.to_dict()
+
+        # Парсим данные из формы
+        updated_data = parse_nested_keys(data)
+
+        # Загружаем текущие настройки
+        with open(settings_path, 'r', encoding='utf-8') as file:
+            settings = json.load(file)
+
+        # Обновляем настройки
+        for key, value in updated_data.items():
+            if key in settings:
+                settings[key].update(value)
+            else:
+                settings[key] = value
+
+        # Сохраняем обновленные настройки обратно в файл
+        with open(settings_path, 'w', encoding='utf-8') as file:
+            json.dump(settings, file, ensure_ascii=False, indent=4)
+
+        return redirect(url_for('admin.admin_myfamily'))
+    else:
+        with open(settings_path, 'r', encoding='utf-8') as file:
+            settings = json.load(file)
+        return render_template('admin/settings-family.html', settings=settings)

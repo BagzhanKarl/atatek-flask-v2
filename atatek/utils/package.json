@@ -1,0 +1,74 @@
+{
+    "name": {
+        "font": "16px",
+        "color": "#000000",
+        "x": "20",
+        "y": "60"
+    },
+    "birthday": {
+        "font": "12px",
+        "color": "#ffffff",
+        "x": "20",
+        "y": "80"
+    },
+    "death": {
+        "font": "12px",
+        "color": "#ffffff",
+        "x": "85",
+        "y": "80"
+    },
+    "link": {
+        "stroke": "#686868",
+        "size": "1px",
+        "fill": null
+    },
+    "node_male": {
+        "rx": "10",
+        "ry": "10",
+        "x": "10",
+        "y": "10",
+        "width": "210",
+        "height": "80",
+        "fill": "#a8d07a",
+        "stroke": "#686868",
+        "stroke_width": "2"
+    },
+    "node_female": {
+        "rx": "10",
+        "ry": "10",
+        "x": "10",
+        "y": "10",
+        "width": "210",
+        "height": "80",
+        "fill": "#ffb6c1",
+        "stroke": "#686868",
+        "stroke_width": "2"
+    },
+    "init_settings": {
+        "enableSearch": "true",
+        "nodeTreeMenu": "true",
+        "titlePhoto": false,
+        "nodeBinding": {
+            "name": "name",
+            "birthday": "birthday",
+            "death": "death"
+        },
+        "nodeMenu": {
+            "edit": {
+                "text": "Өзгерту"
+            }
+        },
+        "editForm": {
+            "cancelBtn": "Жабу",
+            "saveAndCloseBtn": "Сақтау"
+        },
+        "buttons": {
+            "edit": {
+                "text": "Өзгерту"
+            },
+            "share": {
+                "text": "Бөлісу"
+            }
+        }
+    }
+}
