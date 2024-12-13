@@ -148,3 +148,10 @@ def update_record_by_ui(id=None, name=None, bid=None, gender=None, birthday=None
     record.alive = alive
     print(alive)
     db.session.commit()
+
+
+def remove_node_by_id(id):
+    record = Family.query.get(id)
+    if record: db.session.delete(record)
+    db.session.commit()
+    return True

@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 from atatek.db import User, get_place_by_osm, get_parents_list_by_id, get_page_by_id, get_user_tickets_all, \
     get_user_ticket_by_id, get_all_roles, get_role_by_id
 from atatek.db.crud.family import check_user_family, create_record_for_table, update_record_for_table, get_my_tree, \
-    create_record_by_ui, update_record_by_ui, get_tree_count
+    create_record_by_ui, update_record_by_ui, get_tree_count, remove_node_by_id
 from atatek.db.crud.users import get_user_by_id, get_active_subs_by_id
 from atatek.utils import token_required
 
@@ -206,7 +206,7 @@ def update_family():
 
     add = add[::-1]
     last = None
-    print(add)
+    print(remove)
     for item in add:
         id = item.get('id')
         gender = item.get('gender')
@@ -222,7 +222,6 @@ def update_family():
             created_by=user,
             bid=id,
         )
-    print(update)
     for item in update:
         id = item.get('id')
         name = item.get('name')
@@ -243,6 +242,7 @@ def update_family():
             alive=alive
         )
         print(alive)
+    removeS = remove_node_by_id(remove)
 
     # Возвращаем полученные данные в формате JSON для проверки
     return jsonify({
