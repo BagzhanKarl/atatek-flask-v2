@@ -144,16 +144,35 @@ def get_all_user_list():
 def get_all_moderator_list():
     return User.query.filter_by(role=4).all()
 
+
 def create_subscription(user_id, role_id):
-    if role_id == 1 or role_id == 4 or role_id == 5:
-        create_or_update_user(id=user_id, role=role_id)
-        return True
-    else:
-        create_or_update_user(id=user_id, role=role_id)
+    print(user_id, role_id)
+
+    # Обновляем или создаем пользователя для всех ролей
+    create_or_update_user(id=user_id, role=role_id)
+
+    # Проверяем, есть ли активная подписка
+    subs_to_delete = Subscription.query.filter_by(user=user_id, is_active=True).first()
+    if subs_to_delete:
+        print('Есть запись, которую нужно удалить')
+        db.session.delete(subs_to_delete)
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print(f"Ошибка при удалении подписки: {e}")
+            return False
+
+    print(f"role_id: {role_id}")  # Проверяем значение role_id
+    if int(role_id) == 2 or int(role_id) == 3:
+        print("Создаем запись для подписки")
+        # Остальной код
+
         role = Role.query.get(role_id)
-        oldsubs = Subscription.query.filter_by(user=user_id, is_active=True).first()
-        if oldsubs:
-            db.session.delete(oldsubs)
+        if not role:
+            print(f"Роль с id {role_id} не найдена!")
+            return False
+
         subs = Subscription(
             user=user_id,
             role=role.id,
@@ -166,9 +185,34 @@ def create_subscription(user_id, role_id):
             is_active=True
         )
         db.session.add(subs)
-        db.session.commit()
-        return True
-        #print('Создаем запись на месяц и поменяем таблицу')
+        try:
+            db.session.commit()
+            print("Запись подписки успешно создана!")
+        except Exception as e:
+            db.session.rollback()
+            print(f"Ошибка при сохранении подписки: {e}")
+            return False
+
+    return True  # Возвращаем True, если обновление прошло успешно
+
+
 
 def get_active_subs_by_id(user_id):
-    return Subscription.query.filter_by(user=user_id, is_active=True).first()
+    subs = Subscription.query.filter_by(user=user_id, is_active=True).first()
+    if subs:
+        return Subscription.query.filter_by(user=user_id, is_active=True).first()
+    else:
+        return None
+
+def update_subs(subs_id, addchild=None, addinfo=None, personal=None, allpage=None, family_person_count=None):
+    subs = Subscription.query.get(subs_id)
+    if subs:
+        subs.addchild = addchild if addchild is not None else subs.addchild
+        subs.addinfo = addinfo if addinfo is not None else subs.addinfo
+        subs.personal = True if personal == "on"  else False
+        subs.allpage = True if allpage == "on"  else False
+        subs.family_person_count = family_person_count if family_person_count is not None else subs.family_person_count
+        db.session.commit()
+        return True
+    else:
+        return False

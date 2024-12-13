@@ -124,7 +124,8 @@ def family():
                 readonly = True
         if role == 2 or role == 3 or role == 4:
             userAccess = get_active_subs_by_id(user)
-            if userAccess.family_person_count > count:
+
+            if userAccess is not None and userAccess.family_person_count > count:
                 readonly = True
         if role == 5:
             readonly = True

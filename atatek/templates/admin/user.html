@@ -73,7 +73,7 @@
     <hr>
     <div class="card">
         <div class="card-body">
-            <form action="">
+            <form action="/admin/user/{{ user.id }}/edit/subs" method="POST">
                 <div class="mb-3">
                     <label for="">Количество детей, который может добавить</label>
                     <input type="number" value="{{ subs.addchild }}" name="addchild" class="form-control">
@@ -81,6 +81,10 @@
                 <div class="mb-3">
                     <label for="">Количество информаций, который может добавить</label>
                     <input type="number" value="{{ subs.addinfo }}"  name="addinfo" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="">Количество людей, который может добавить в "Менің әулетім"</label>
+                    <input type="number" value="{{ subs.family_person_count }}"  name="family_person_count" class="form-control">
                 </div>
                 <div class="row">
                     <div class="col">
@@ -99,6 +103,9 @@
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-primary">Сохранить</button>
                 </div>
             </form>
         </div>

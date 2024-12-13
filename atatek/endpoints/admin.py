@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 from atatek.db import get_page_by_id, get_moderator_list_by_page_id, delete_moderator, \
     get_all_popular_persons_by_page_id, get_all_roles, get_role_by_id, update_role, get_place_by_osm
 from atatek.db.crud.news import create_news_admin, get_news_all_by_page_id, create_site_settings
-from atatek.db.crud.users import get_user_by_id, create_subscription, get_active_subs_by_id
+from atatek.db.crud.users import get_user_by_id, create_subscription, get_active_subs_by_id, update_subs
 from atatek.utils import token_required
 from atatek.utils.icons import save_file
 
@@ -172,6 +172,7 @@ def admin_role(id):
         title = request.form['title']
         add_child = request.form['add_child']
         add_info = request.form['add_info']
+        family_person_count = request.form['family_person_count']
         personal_page = True if request.form.get('personal_page') else False
         all_pages = True if request.form.get('all_pages') else False
         price = request.form['price']
@@ -181,6 +182,7 @@ def admin_role(id):
             title=title,
             add_child=add_child,
             add_info=add_info,
+            family_person_count=family_person_count,
             price=price,
             personal=personal_page,
             all_pages=all_pages,
@@ -199,7 +201,6 @@ def admin_role(id):
 def admin_moderator_delete(id, page):
     delete = delete_moderator(id)
     return redirect(url_for('admin.admin_site', id=page))
-
 
 @admin.route('/user/change/role', methods=['POST'])
 def admin_user_change():
@@ -236,3 +237,22 @@ def admin_myfamily():
         with open(settings_path, 'r', encoding='utf-8') as file:
             settings = json.load(file)
         return render_template('admin/settings-family.html', settings=settings)
+
+@admin.route('/user/<int:id>/edit/subs', methods=['POST'])
+def admin_user_edit_subs(id):
+    addinfo = request.form.get('addinfo')
+    addchild = request.form.get('addchild')
+    family_person_count = request.form.get('family_person_count')
+    all_page = request.form.get('all_pages', None)
+    personal_page = request.form.get('personal_page', None)
+    subs = get_active_subs_by_id(id)
+    if subs is not None:
+        create = update_subs(
+            subs_id=subs.id,
+            addinfo=addinfo,
+            addchild=addchild,
+            allpage=all_page,
+            personal=personal_page,
+            family_person_count=family_person_count
+        )
+        return redirect(url_for('admin.admin_user', id=id))

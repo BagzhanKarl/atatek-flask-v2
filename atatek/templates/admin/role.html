@@ -47,9 +47,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="">Стоимость (мес/тг)</label>
-                    <input type="number" name="price" required value="{{ role.price }}" class="form-control">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="">Количество людей, который может добавить в "Менің әулетім"</label>
+                            <input type="number" name="family_person_count" required value="{{ role.family_person_count }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="">Стоимость (мес/тг)</label>
+                            <input type="number" name="price" required value="{{ role.price }}" class="form-control">
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-3 text-end">
                     <button class="btn btn-primary">Сохранить</button>

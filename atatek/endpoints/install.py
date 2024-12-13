@@ -1,57 +1,70 @@
 from flask import Blueprint, jsonify
 
-from atatek.db import create_role, create_tree, create_new_page
+from atatek.db import create_role, create_tree, create_new_page, get_all_roles
 
 install = Blueprint('install', __name__)
 
 @install.route('/install/first/launch')
 def first_launch():
-    # create first tree data
-    roles = [
+    roles =  [
         {
-            "title": "Бастау",
-            "price": 0.00,
-            "addchild": 0,
-            "addinfo": 0,
+          "add_child": 0,
+          "add_info": 0,
+          "all_pages": False,
+          "family_person_count": 10,
+          "personal_page": True,
+          "price": 0,
+          "titile": "Бастау"
         },
         {
-            "title": "Сарапшы",
-            "price": 0.00,
-            "addchild": 0,
-            "addinfo": 0,
+          "add_child": 0,
+          "add_info": 0,
+          "all_pages": False,
+          "family_person_count": 15,
+          "personal_page": True,
+          "price": 0,
+          "titile": "Сарапшы"
         },
         {
-            "title": "Алтын",
-            "price": 0.00,
-            "addchild": 0,
-            "addinfo": 0,
+          "add_child": 10,
+          "add_info": 10,
+          "all_pages": True,
+          "family_person_count": 10,
+          "personal_page": True,
+          "price": 15000,
+          "titile": "Алтын"
         },
         {
-            "title": "Модератор",
-            "price": 0.00,
-            "addchild": 0,
-            "addinfo": 0,
+          "add_child": 0,
+          "add_info": 0,
+          "all_pages": False,
+          "family_person_count": 0,
+          "personal_page": True,
+          "price": 0,
+          "titile": "Модератор"
         },
         {
-            "title": "Администратор",
-            "price": 0.00,
-            "addchild": 0,
-            "addinfo": 0,
-        },
+          "add_child": 0,
+          "add_info": 0,
+          "all_pages": False,
+          "family_person_count": 0,
+          "personal_page": True,
+          "price": 0,
+          "titile": "Администратор"
+        }
     ]
     for role in roles:
-        role = create_role(
-            title=role["title"],
+        data = create_role(
+            title=role["titile"],
             price=role["price"],
-            add_child=role["addchild"],
-            add_info=role["addinfo"],
+            add_child=role["add_child"],
+            add_info=role["add_info"],
+            all_pages=role["all_pages"],
+            personal_page=role["personal_page"],
+            family_person_count=role["family_person_count"],
         )
-
-    return jsonify(
-        {
-            "status": True,
-        }
-    )
+        print(data)
+    return jsonify(roles)
 
 @install.route('/install/second/launch')
 def second_launch():
