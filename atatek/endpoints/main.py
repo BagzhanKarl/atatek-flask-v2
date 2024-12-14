@@ -1,12 +1,12 @@
 import json
 import os
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, make_response
 
 from atatek.db import User, get_place_by_osm, get_parents_list_by_id, get_page_by_id, get_user_tickets_all, \
     get_user_ticket_by_id, get_all_roles, get_role_by_id
 from atatek.db.crud.family import check_user_family, create_record_for_table, update_record_for_table, get_my_tree, \
     create_record_by_ui, update_record_by_ui, get_tree_count, remove_node_by_id
-from atatek.db.crud.users import get_user_by_id, get_active_subs_by_id
+from atatek.db.crud.users import get_user_by_id, get_active_subs_by_id, create_or_update_user, update_login_token
 from atatek.utils import token_required
 
 main = Blueprint('main', __name__)
@@ -78,13 +78,51 @@ def my_profile():
     user = get_user_by_id(userid)
     place = get_place_by_osm(user.address)
     page = request.page
-    personal_tree = get_parents_list_by_id(get_page_by_id(page).tree_id)
+    datapage = get_page_by_id(page)
+    role = request.role
+    datarole = get_role_by_id(role)
+    personal_tree = get_parents_list_by_id(datapage.tree_id)
     tickets = get_user_tickets_all(userid)
-    return render_template('main/profile.html', page=get_page_by_id(page).title, tickets=tickets, treelist=personal_tree, user=user, place=place)
+    return render_template('main/profile.html', page=datapage.title, tickets=tickets, treelist=personal_tree[::-1], user=user, place=place, role=datarole)
 
 @main.route('/my/profile/edit')
+@token_required
 def my_profile_edit():
-    pass
+    userid = request.user_id
+    user = get_user_by_id(userid)
+    place = get_place_by_osm(user.address)
+    page = request.page
+    datapage = get_page_by_id(page)
+    role = request.role
+    datarole = get_role_by_id(role)
+    personal_tree = get_parents_list_by_id(datapage.tree_id)
+    tickets = get_user_tickets_all(userid)
+    return render_template('main/profile-edit.html', page=datapage, tickets=tickets, treelist=personal_tree[::-1],
+                           user=user, place=place, role=datarole)
+
+@main.route('/my/profile/edit/save', methods=['POST'])
+@token_required
+def my_profile_edit_save():
+    userid = request.user_id
+    country = request.form.get('country')
+    address = request.form.get('osm')
+    page = request.form.get('page')
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    print(first_name)
+    user = create_or_update_user(
+        id=userid,
+        country=country,
+        address=address,
+        first_name=first_name,
+        last_name=last_name,
+        page=page,
+    )
+    token = update_login_token(userid)
+    response = make_response(redirect(url_for('main.my_profile')))
+    response.set_cookie('token', user['token'], domain='.atatek.kz')
+    # response.set_cookie('token', token['token'])
+    return response
 
 @main.route('/my/profile/ticket/<int:id>')
 @token_required

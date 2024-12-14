@@ -16,7 +16,9 @@
                     <div class="card" style="position: sticky; top: 150px">
                         <div class="card-body">
                             <img src="{{ url_for('static', filename='images/avatar.png') }}" width="100%" style="border-radius: 20px" alt="">
-{#                            <a href="/my/profile/edit" class="btn btn-secondary w-100 mt-3">Өзгерту</a>#}
+
+                            <span  class="btn btn-primary w-100 mt-3">{{role.title}}</span>
+                            <a href="/my/profile/edit" class="btn btn-secondary w-100 mt-3">Өзгерту</a>
                             <a href="/auth/logout" class="btn btn-danger w-100 mt-3">Шығу</a>
                         </div>
                     </div>

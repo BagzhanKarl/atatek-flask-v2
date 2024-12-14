@@ -15,6 +15,8 @@ def create_or_update_user(id=None, phone=None, role=None, first_name=None, last_
                 print('Успешно')
                 if country: user.country = country
                 if address: user.address = address
+                if first_name: user.first_name = first_name
+                if last_name: user.last_name = last_name
                 if page: user.page = page
                 if role: user.role = role
                 db.session.commit()
@@ -61,6 +63,20 @@ def login_user(phone, password):
     except Exception as e:
         print(e)
         return {"status": False, "data": "Деректерді өңдеу кезінде қателік болды, кейінірек қайталаңыз"}
+
+def update_login_token(user_id):
+    try:
+        user = User.query.filter_by(id=user_id).first()
+        if user is None:
+            return {"status": False, "data": "Пользователь с таким номером не найден"}
+
+        token = generate_jwt(user.id, user.first_name, user.last_name, user.role, user.page)
+        return {"status": True, "token": token}
+
+    except Exception as e:
+        print(e)
+        return {"status": False, "data": "Деректерді өңдеу кезінде қателік болды, кейінірек қайталаңыз"}
+
 
 # Get User by ID
 def get_user_by_id(user_id):
